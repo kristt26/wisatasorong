@@ -40,11 +40,8 @@
     <script src="<?=base_url()?>public/js/controllers/admin.controllers.js"></script>
     <script src="<?= base_url('public/js/boxmap/dist/mapbox-gl.js')?>"></script>
     <script src="<?= base_url('public/js/boxmap/dist/mapbox-gl-directions.js')?>"></script>
+    <!-- <script src="<?= base_url('public/js/maps.js')?>"></script> -->
     <!-- <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script> -->
-    <script>
-
-    </script>
-
 </body>
 
 </html>
