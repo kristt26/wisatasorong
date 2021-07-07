@@ -7,7 +7,7 @@
     <title>Maps</title>
     <link rel="stylesheet" href="<?= base_url('node_modules/mapbox-gl/dist/mapbox-gl.css')?>">
     <style>
-        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        #map { top: 0; bottom: 0; width: 100%; }
     </style>
 </head>
 <body>
