@@ -22,6 +22,6 @@ class Welcome extends CI_Controller
     public function index()
     {
         // $c['content'] = $this->load->view('home/control', '',true);
-        $this->load->view('guest/_shared/layout');
+        $this->load->view('admin/_shared/layout');
     }
 }
