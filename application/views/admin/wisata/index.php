@@ -12,11 +12,11 @@
                      <table class="table table-sm table-hover table-bordered">
                          <thead>
                              <tr>
-                                 <td>No</td>
-                                 <td>Wisata</td>
-                                 <td>Lat</td>
-                                 <td>Long</td>
-                                 <td>Alamat</td>
+                                 <th>No</th>
+                                 <th>Wisata</th>
+                                 <th>Lat</th>
+                                 <th>Long</th>
+                                 <th>Alamat</th>
                              </tr>
                          </thead>
                          <tbody>

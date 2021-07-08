@@ -14,6 +14,12 @@ class Wisata extends CI_Controller {
         
     }
 
+    public function tambah()
+    {
+        $content['content'] = $this->load->view('admin/wisata/post', '', TRUE);
+        $this->load->view('admin/_shared/layout', $content);
+    }
+
     public function post()
     {
         # code...
