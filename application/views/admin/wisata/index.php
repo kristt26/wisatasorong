@@ -6,7 +6,7 @@
              <div class="card">
                  <div class="card-header bg-warning d-flex justify-content-between">
                      <h3>Daftar Wisata</h3>
-                     <button class="btn btn-primary btn-sm">Tambah</button>
+                     <a href="<?=base_url('admin/wisata/tambah')?>" class="btn btn-primary btn-sm">Tambah</a>
                  </div>
                  <div class="card-body">
                      <table class="table table-sm table-hover table-bordered">

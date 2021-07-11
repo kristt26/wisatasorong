@@ -89,98 +89,95 @@ function homeController($scope, $http, helperServices) {
 }
 
 function tambahWisataController($scope, $http, helperServices) {
+    $scope.model = {};
     $scope.tampilinput = false;
     const apiKey = "AAPKe04c23b9e1e14827a485e3c06a91369a44TROFRCnx1O_wzKtYcV81b7ApPKaBQwXH064LgF6Y-BxD_3-5yyVhpmIrVi1V19";
 
     const basemapEnum = "ArcGIS:Navigation";
-    $scope.Init = () => {
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia3Jpc3R0MjYiLCJhIjoiY2txcWt6dHgyMTcxMzMwc3RydGFzYnM1cyJ9.FJYE8uVi-eVl_mH_DLLEmw';
-        var map = new mapboxgl.Map({
-            container: 'mapp',
-            style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${basemapEnum}?type=style&token=${apiKey}`,
-            center: [131.25478, -0.86210],
-            zoom: 10
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia3Jpc3R0MjYiLCJhIjoiY2txcWt6dHgyMTcxMzMwc3RydGFzYnM1cyJ9.FJYE8uVi-eVl_mH_DLLEmw';
+    var map = new mapboxgl.Map({
+        container: 'mapp',
+        style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${basemapEnum}?type=style&token=${apiKey}`,
+        center: [131.25478, -0.86210],
+        zoom: 10
+    });
+
+    // var marker = new mapboxgl.Marker({
+    //     color: "maroon",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    //     draggable: true
+    // }).setLngLat([131.25478, -0.86210])
+    //     .addTo(map);
+    map.on('click', (e) => {
+        const coords = e.lngLat.toArray();
+
+        const authentication = new arcgisRest.ApiKey({
+            key: apiKey
         });
 
+        arcgisRest
+            .reverseGeocode(coords, {
+                authentication
+            })
+            .then((result) => {
 
-        var marker = new mapboxgl.Marker({
-            color: "maroon",
-            draggable: true
-        }).setLngLat([131.25478, -0.86210])
-            .addTo(map);
-        map.on('click', (e) => {
-            const coords = e.lngLat.toArray();
-
-            const authentication = new arcgisRest.ApiKey({
-                key: apiKey
-            });
-
-            arcgisRest
-                .reverseGeocode(coords, {
-                    authentication
+                const lngLat = [result.location.x, result.location.y];
+                // const label = `${result.address.LongLabel}<br>${lngLat[0].toLocaleString()}, ${lngLat[1].toLocaleString()}`;
+                // new mapboxgl.Popup().setLngLat(lngLat).setHTML(label).addTo(map);
+                $scope.$applyAsync(()=>{
+                    $scope.model.alamat = result.address.LongLabel;
+                    $scope.model.longitude = lngLat[1];
+                    $scope.model.latitude = lngLat[0];
                 })
-                .then((result) => {
-
-                    const lngLat = [result.location.x, result.location.y];
-                    const label = `${result.address.LongLabel}<br>${lngLat[0].toLocaleString()}, ${lngLat[1].toLocaleString()}`;
-                    new mapboxgl
-                        .Popup()
-                        .setLngLat(lngLat)
-                        .setHTML(label)
-                        .addTo(map);
-                }).catch((error) => {
-                    alert("There was a problem using the reverse geocode service. See the console for details.");
-                    console.error(error);
-                });
-        })
-
-        map.on('load', function () {
-            map.addSource('maine', {
-                'type': 'geojson',
-                'data': helperServices.url + 'public/js/sorong.geojson'
+                console.log(result.address);
+                $("#addLatLong").modal('hide');
+            }).catch((error) => {
+                alert("There was a problem using the reverse geocode service. See the console for details.");
+                console.error(error);
             });
+    })
 
-            map.addLayer({
-                'id': 'maine',
-                'type': 'fill',
-                'source': 'maine',
-                'layout': {},
-                'paint': {
-                    'fill-color': '#0080ff',
-                    'fill-opacity': 0.2
-                }
-            });
-            map.addLayer({
-                'id': 'outline',
-                'type': 'line',
-                'source': 'maine',
-                'layout': {},
-                'paint': {
-                    'line-color': 'red',
-                    'line-width': 1,
-                    'line-opacity': 0.25
-                }
-            });
+    map.on('load', function () {
+        map.addSource('maine', {
+            'type': 'geojson',
+            'data': helperServices.url + 'public/js/sorong.geojson'
         });
 
-        $scope.showMap = () => {
-            $("#addLatLong").modal('show');
-            setTimeout(() => {
-                map.resize();
-            }, 300);
-        }
-        var geocoder = new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl
+        map.addLayer({
+            'id': 'maine',
+            'type': 'fill',
+            'source': 'maine',
+            'layout': {},
+            'paint': {
+                'fill-color': '#0080ff',
+                'fill-opacity': 0.2
+            }
         });
+        map.addLayer({
+            'id': 'outline',
+            'type': 'line',
+            'source': 'maine',
+            'layout': {},
+            'paint': {
+                'line-color': 'red',
+                'line-width': 1,
+                'line-opacity': 0.25
+            }
+        });
+    });
 
-        document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-
+    $scope.showMap = () => {
+        $("#addLatLong").modal('show');
+        setTimeout(() => {
+            map.resize();
+        }, 300);
     }
-    // navigator.geolocation.getCurrentPosition((cord) => {
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+    });
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+    
 
 
-    // }, err => {
-
-    // }, {})
+    
 }

@@ -1,224 +1,273 @@
 <!DOCTYPE html>
-<html ng-app="apps" ng-controller="pageController">
+<html ng-app="apps" ng-controller="indexController">
 
 <head>
-    <meta charset="utf-8">
-    <title>Display driving directions</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link href="<?=base_url('public/js/boxmap/dist/mapbox-gl.css')?>" rel="stylesheet">
-    <link rel="stylesheet" href="<?=base_url('public/js/boxmap/dist/mapbox-gl-directions.css')?>" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext"
-        rel="stylesheet">
-    <link href="<?=base_url('public/guest/css/bootstrap.css')?>" rel="stylesheet">
-    <link href="<?=base_url('public/guest/css/fontawesome-all.css')?>" rel="stylesheet">
-    <link href="<?=base_url('public/guest/css/swiper.css')?>" rel="stylesheet">
-    <link href="<?=base_url('public/guest/css/magnific-popup.css')?>" rel="stylesheet">
-    <link href="<?=base_url('public/guest/css/styles.css')?>" rel="stylesheet">
-    <link rel="icon" href="<?=base_url('public/guest/images/favicon.png')?>">
-    <link rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
-        type="text/css">
-    <style>
-    #map {
-        top: 0;
-        bottom: 0;
-        width: 100%;
-    }
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{titleHeader}}</title>
+  <link rel="icon" href="<?=base_url('favicon.ico')?>">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    #mapp {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-    }
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
 
-    .mapboxgl-ctrl-geocoder input[type='text'] {
-        width: 100%;
-        height: 40px;
-        padding: 6px 51px;
-    }
+  <link rel="stylesheet" href="<?=base_url()?>public/plugins/sweetalert2/sweetalert2.min.css">
 
-    .geocoder {
-        display: flex;
-        justify-content: center;
-    }
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?=base_url()?>public/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+            .containerr {
+                display: flex;
+                height: 60vh;
+                justify-content: center;
+                align-items: center;
+                direction: row;
+            }
 
-    /* #mapp {
-        position: 
-        top: 0;
-        bottom: 0;
-        width: 100%;
-    } */
+            @media screen {
+                #print {
+                    /* font-family:verdana, arial, sans-serif; */
+                }
+                .screen{
+                    display:none;
+                }
+            }
 
-    .mapbox-directions-origin,
-    .mapbox-directions-destination,
-    .mapbox-directions-inputs button {
-        /* display: none; */
-    }
-    </style>
+            @media print {
+                /* #print {font-family:georgia, times, serif;} */
+                .screen{
+                    display:block;
+                }
+            }
+        </style>
+</head>
 </head>
 
-<body data-spy="scroll" data-target=".fixed-top">
-
-    <div class="spinner-wrapper">
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
-        </div>
-    </div>
-    <!-- end of preloader -->
-
-
+<body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed layout-navbar-fixed">
+  <?php
+if (!$this->session->userdata('is_login')) {
+    redirect('auth');
+}
+?>
+  <div class="wrapper">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark navbar-custom fixed-top top-nav-collapsee">
-        <!-- Text Logo - Use this if you don't have a graphic logo -->
-        <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
-
-        <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>
-
-        <!-- Mobile Menu Toggle Button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-awesome fas fa-bars"></span>
-            <span class="navbar-toggler-awesome fas fa-times"></span>
-        </button>
-        <!-- end of mobile menu toggle button -->
-
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#header">HOME <span
-                            class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" href="index.html#about" id="navbarDropdown"
-                        role="button" aria-haspopup="true" aria-expanded="false">MASTER DATA</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">Visi
-                                Misi</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">Kecamatan</span></a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#intro">WISATA</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#services">UMKM</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#callMe">KECAMATAN</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#projects">PROJECTS</a>
-                </li>
-
-                <!-- Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" href="index.html#about" id="navbarDropdown"
-                        role="button" aria-haspopup="true" aria-expanded="false">ABOUT</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">TERMS
-                                CONDITIONS</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY
-                                POLICY</span></a>
-                    </div>
-                </li>
-                <!-- end of dropdown menu -->
-
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#contact">CONTACT</a>
-                </li>
-            </ul>
-            <span class="nav-item social-icons">
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-facebook-f fa-stack-1x"></i>
-                    </a>
-                </span>
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-twitter fa-stack-1x"></i>
-                    </a>
-                </span>
-            </span>
-        </div>
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="<?=base_url('auth/logout')?>">
+            LOGOUT
+          </a>
+        </li>
+      </ul>
     </nav>
-    <!-- end of navbar -->
-    <!-- end of navbar -->
+    <!-- /.navbar -->
 
+    <!-- Main Sidebar Container -->
+    <?php
+$this->load->view('_shared/sidebar');
 
-    <!-- Breadcrumbs -->
-    <div class="ex-basic-1" style="padding-top: 4rem !important; padding-bottom: 0rem !important; padding-right:2rem">
-        <div class="d-flex justify-content-end">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumbs">
-                        <a href="index.html">Home</a><i class="fa fa-angle-double-right"></i><span>Privacy Policy</span>
-                    </div>
-                </div>
+?>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>{{header}}</h1>
             </div>
-        </div>
-    </div>
-    <!-- end of ex-basic-1 -->
-    <!-- end of breadcrumbs -->
-    <!-- <div class="modal fade" id="addLatLong" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-        aria-hidden="true"> -->
-
-    <!-- </div> -->
-    <div style="background-color: #f4f6f9;">
-        <?= $content?>
-    </div>
-
-    <!-- Copyright -->
-    <div class="copyright fixed-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p class="p-small">Copyright © 2020 <a href="https://inovatik.com">Template by Inovatik</a></p>
-                </div>
-                <!-- end of col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="<?=base_url('home')?>">Home</a></li>
+                <li class="breadcrumb-item active">{{breadcrumb}}</li>
+              </ol>
             </div>
-            <!-- enf of row -->
+          </div>
         </div>
-        <!-- end of container -->
+      </section>
+
+      <section class="content">
+        <div class="container-fluid">
+          <?=$content?>
+        </div>
+      </section>
     </div>
-    <!-- end of copyright -->
-    <!-- end of copyright -->
 
+    <footer class="main-footer">
+      <div class="float-right d-none d-sm-block">
+        <b>Sistem Informasi pendataan Wajib Pajak</b>
+      </div>
+      <strong>Copyright &copy; 2020
+    </footer>
 
-    <!-- Scripts -->
-    <script src="<?=base_url('public/guest/js/jquery.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/popper.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/bootstrap.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/jquery.easing.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/swiper.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/jquery.magnific-popup.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/morphext.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/isotope.pkgd.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/validator.min.js')?>"></script>
-    <script src="<?=base_url('public/guest/js/scripts.js')?>"></script>
-    <!-- Custom scripts -->
-    <script src="<?=base_url()?>public/libs/angular/angular.min.js"></script>
-    <script src="<?=base_url()?>public/js/apps.js"></script>
-    <script src="<?=base_url()?>public/js/services/helper.services.js"></script>
-    <script src="<?=base_url()?>public/js/controllers/admin.controllers.js"></script>
-    <script src="<?=base_url('public/js/boxmap/dist/mapbox-gl.js')?>"></script>
-    <script src="<?=base_url('public/js/boxmap/dist/mapbox-gl-directions.js')?>"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js">
-    </script>
-    <script src="https://unpkg.com/@esri/arcgis-rest-request@3.0.0/dist/umd/request.umd.js"></script>
-    <script src="https://unpkg.com/@esri/arcgis-rest-geocoding@3.0.0/dist/umd/geocoding.umd.js"></script>
-    <script src="https://unpkg.com/@esri/arcgis-rest-auth@3.0.0/dist/umd/auth.umd.js"></script>
-    <!-- <script src="<?=base_url('public/js/maps.js')?>"></script> -->
-    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script> -->
+    <!-- Control Sidebar -->
+    <!-- <aside class="control-sidebar control-sidebar-dark">
+    </aside> -->
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="<?=base_url()?>public/plugins/jquery/jquery.min.js"></script>
+  <script src="<?=base_url()?>public/plugins/angular/angular.min.js"></script>
+
+  <script src="<?=base_url()?>public/js/apps.js"></script>
+  <script src="<?=base_url()?>public/js/services/helper.services.js"></script>
+  <script src="<?=base_url()?>public/js/services/auth.services.js"></script>
+  <!-- <script src="<?=base_url()?>public/js/services/storage.services.js"></script> -->
+  <script src="<?=base_url()?>public/js/services/services.js"></script>
+  <script src="<?=base_url()?>public/js/controllers/admin.controllers.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="<?=base_url()?>public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Select2 -->
+  <script src="<?=base_url()?>public/plugins/select2/js/select2.full.min.js"></script>
+  <!-- Bootstrap4 Duallistbox -->
+  <script src="<?=base_url()?>public/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+  <!-- InputMask -->
+  <script src="<?=base_url()?>public/plugins/moment/moment.min.js"></script>
+  <script src="<?=base_url()?>public/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="<?=base_url()?>public/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap color picker -->
+  <script src="<?=base_url()?>public/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="<?=base_url()?>public/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="<?=base_url()?>public/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <script src="<?=base_url()?>public/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="<?=base_url()?>public/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="<?=base_url()?>public/dist/js/demo.js"></script>
+  <script src="<?=base_url();?>public/js/googleMap.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByGhiEjG2rcKsVqYXwJOtUugy0BS55_lo&libraries=geometry,places"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script src="<?=base_url()?>public/plugins/loading/dist/loadingoverlay.min.js"></script>
+  <script src="<?=base_url()?>public/lib/angular-locale_id-id.js"></script>
+  <script src="<?=base_url()?>public/lib/input-mask/angular-input-masks-standalone.min.js"></script>
+  <script src="<?=base_url()?>public/lib/angular-base64-upload.js"></script>
+  <script src="http://cdn.sobekrepository.org/includes/gmaps-markerwithlabel/1.9.1/gmaps-markerwithlabel-1.9.1.js" type="text/javascript"></script>
+  <script src="<?=base_url()?>public/js/jquery.PrintArea.js"></script>
+  <!-- Page script -->
+  <script>
+    $.LoadingOverlay("show", {
+      background : "rgba(0, 0, 0, 0.9)",
+			image : "<?php echo base_url('public/img/preloader.gif'); ?>",
+			imageAnimation: 'none'
+    });
+    $(function () {
+      function formatState (state) {
+        if (!state.id) {
+            return state.text;
+        }
+        var baseUrl = "<?=base_url()?>/public/img/marker/";
+        var $state = $(
+            '<span><img src="' + baseUrl + state.element.value.toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
+        );
+        return $state;
+      };
+      //Initialize Select2 Elements
+      $('.marker').select2({
+        placeholder: '--- Pilih Item ---',
+        templateResult: formatState
+      });
+      $('.select3').select2({
+        placeholder: '--- Pilih Item ---'
+      });
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+
+      //Datemask dd/mm/yyyy
+      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+      //Datemask2 mm/dd/yyyy
+      $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+      //Money Euro
+      $('[data-mask]').inputmask()
+
+      //Date range picker
+      $('#reservationdate').datetimepicker({
+        format: 'L'
+      });
+      //Date range picker
+      $('#reservation').daterangepicker()
+      //Date range picker with time picker
+      $('#reservationtime').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+          format: 'MM/DD/YYYY hh:mm A'
+        }
+      })
+      //Date range as a button
+      $('#daterange-btn').daterangepicker(
+        {
+          ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate: moment()
+        },
+        function (start, end) {
+          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
+      )
+
+      //Timepicker
+      $('#timepicker').datetimepicker({
+        format: 'LT'
+      })
+
+      //Bootstrap Duallistbox
+      $('.duallistbox').bootstrapDualListbox()
+
+      //Colorpicker
+      $('.my-colorpicker1').colorpicker()
+      //color picker with addon
+      $('.my-colorpicker2').colorpicker()
+
+      $('.my-colorpicker2').on('colorpickerChange', function (event) {
+        $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+      });
+
+      $("input[data-bootstrap-switch]").each(function () {
+        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+      });
+
+    })
+  </script>
 </body>
 
 </html>
