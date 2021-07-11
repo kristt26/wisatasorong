@@ -45,6 +45,8 @@
                 }, "slow");
             });
             $scope.model={};
+            $scope.model.username = 'Administrator';
+            $scope.model.password = 'Admin123';
             $scope.login = ()=>{
                 $http({
                     method: "post",

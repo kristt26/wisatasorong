@@ -47,12 +47,6 @@
         justify-content: center;
     }
 
-    /* #mapp {
-        position: 
-        top: 0;
-        bottom: 0;
-        width: 100%;
-    } */
 
     .mapbox-directions-origin,
     .mapbox-directions-destination,

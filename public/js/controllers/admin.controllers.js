@@ -1,6 +1,7 @@
 angular.module('adminctrl', [])
     .controller('pageController', pageController)
     .controller('homeController', homeController)
+    .controller('wisataController', wisataController)
     .controller('tambahWisataController', tambahWisataController)
     ;
 function pageController($scope, helperServices) {
@@ -88,16 +89,27 @@ function homeController($scope, $http, helperServices) {
     // }, {})
 }
 
-function tambahWisataController($scope, $http, helperServices) {
+function wisataController($scope, $http, helperServices, wisataServices) {
+    $scope.datas = [];
+    wisataServices.get().then(res=>{
+        $scope.datas = res;
+    })
+    
+}
+
+function tambahWisataController($scope, $http, helperServices, wilayahServices, message, wisataServices) {
     $scope.model = {};
     $scope.tampilinput = false;
+    $scope.kecamatans= [];
+    $scope.kecamatan= {};
     const apiKey = "AAPKe04c23b9e1e14827a485e3c06a91369a44TROFRCnx1O_wzKtYcV81b7ApPKaBQwXH064LgF6Y-BxD_3-5yyVhpmIrVi1V19";
 
     const basemapEnum = "ArcGIS:Navigation";
     mapboxgl.accessToken = 'pk.eyJ1Ijoia3Jpc3R0MjYiLCJhIjoiY2txcWt6dHgyMTcxMzMwc3RydGFzYnM1cyJ9.FJYE8uVi-eVl_mH_DLLEmw';
     var map = new mapboxgl.Map({
         container: 'mapp',
-        style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${basemapEnum}?type=style&token=${apiKey}`,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        // style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${basemapEnum}?type=style&token=${apiKey}`,
         center: [131.25478, -0.86210],
         zoom: 10
     });
@@ -176,8 +188,21 @@ function tambahWisataController($scope, $http, helperServices) {
         mapboxgl: mapboxgl
     });
     document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
-    
-
-
-    
+    wilayahServices.get().then(res=>{
+        res.kecamatans.forEach(element => {
+            element.kelurahans = res.kelurahans.filter(x=>x.kecamatanid == element.id);
+        });
+        $scope.kecamatans = res.kecamatans;
+        console.log($scope.kecamatans);
+    })
+    $scope.save = (item)=>{
+        item.type = "Wisata";
+        message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x=>{
+            wisataServices.post(item).then(x=>{
+                message.confirm("Berhasil Menyimpan Data", true).then(x=>{
+                    document.location.href = helperServices.url + "admin/wisata";
+                });
+            })
+        })
+    }
 }

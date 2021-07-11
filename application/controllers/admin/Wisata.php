@@ -2,6 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Wisata extends CI_Controller {
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('admin/Lokasi_model', 'lokasi');
+        
+    }
+    
 
     public function index()
     {
@@ -11,7 +19,8 @@ class Wisata extends CI_Controller {
 
     public function get($id = null)
     {
-        
+        $result = $this->lokasi->get("Wisata");
+        echo json_encode($result);
     }
 
     public function tambah()
@@ -22,7 +31,13 @@ class Wisata extends CI_Controller {
 
     public function post()
     {
-        # code...
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->lokasi->post($data);
+        if($result)
+            echo json_encode(true);
+        else
+            http_response_code(400);
+            echo json_encode(false);
     }
 
     public function put()
