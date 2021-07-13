@@ -27,7 +27,7 @@
     <!-- Bootstrap4 Duallistbox -->
     <link rel="stylesheet" href="<?=base_url()?>public/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <link rel="stylesheet" href="<?=base_url()?>public/plugins/sweetalert2/sweetalert2.min.css">
-    
+
     <!-- Theme style -->
     <link rel="stylesheet" href="<?=base_url()?>public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?=base_url()?>public/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -191,7 +191,7 @@ $this->load->view('admin/_shared/sidebar');
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <b>Sistem Informasi Asset Kendaraan</b>
+                <b>Sistem Informasi Pendataan Wisata Sorong</b>
             </div>
             <strong>Copyright &copy; 2020 Octagon Cendrawasih Solution (OCS)
         </footer>

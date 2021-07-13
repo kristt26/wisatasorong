@@ -32,7 +32,29 @@
                 </p>
               </a>
             </li>
-            <?php if ($this->session->userdata('role') == 'Admin'): ?>
+            <li ng-class="{'nav-item menu-open': header=='Laporan', 'nav-item': header!='Laporan'}">
+              <a href="javascript:void()" ng-class="{'nav-link active': header=='Laporan', 'nav-link': header!='Laporan'}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                 Manajemen Data
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="<?=base_url('admin/users')?>" ng-class="{'nav-link active': title=='Laporan Tempat Usaha', 'nav-link': title!='Laporan Tempat Usaha'}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>User</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<?=base_url('admin/kecamatan')?>" ng-class="{'nav-link active': title=='Laporan Rekapitulasi', 'nav-link': title!='Laporan Rekapitulasi'}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Kecamatan</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a href="<?=base_url('admin/wisata')?>" ng-class="{'nav-link active': header=='Petugas', 'nav-link': header!='Petugas'}">
                 <i class="nav-icon fas fa-users"></i>
@@ -42,14 +64,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?=base_url('kategori')?>" ng-class="{'nav-link active': header=='Jenis Usaha', 'nav-link': header!='Jenis Usaha'}">
+              <a href="<?=base_url('admin/umkm')?>" ng-class="{'nav-link active': header=='Jenis Usaha', 'nav-link': header!='Jenis Usaha'}">
                 <i class="nav-icon fas fa-registered"></i>
                 <p>
-                  Jenis Usaha
+                  UMKM
                 </p>
               </a>
             </li>
-            <?php endif;?>
             <li class="nav-item">
               <a href="<?=base_url('wajibpajak')?>" ng-class="{'nav-link active': header=='Wajib Pajak', 'nav-link': header!='Wajib Pajak'}">
                 <i class="nav-icon fas fa-address-card"></i>

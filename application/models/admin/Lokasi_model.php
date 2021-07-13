@@ -1,8 +1,9 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Lokasi_model extends CI_Model {
+class Lokasi_model extends CI_Model
+{
 
     public function get($type)
     {
@@ -18,27 +19,27 @@ class Lokasi_model extends CI_Model {
         $this->load->library('MyLib');
         $this->db->trans_begin();
         $item = [
-            'nama'=> $data['nama'],
-            'alamat'=> $data['alamat'],
-            'latitude'=> $data['latitude'],
-            'longitude'=> $data['longitude'],
-            'kecamatanid'=> $data['kecamatanid'],
-            'kelurahanid'=> $data['kelurahanid'],
-            'userid'=> $this->session->userdata('id'),
-            'type'=>$data['type']
-        ];       
+            'nama' => $data['nama'],
+            'alamat' => $data['alamat'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+            'kecamatanid' => $data['kecamatanid'],
+            'kelurahanid' => $data['kelurahanid'],
+            'userid' => $this->session->userdata('id'),
+            'type' => $data['type'],
+        ];
         $this->db->insert('lokasi', $item);
         $lokasiid = $this->db->insert_id();
         $item = [
-            'file'=> isset($data['file']['base64']) ? $this->mylib->decodebase64($data['file']['base64'], 'galeri') : "",
-            'lokasiid'=>$lokasiid,
-            'status'=>1
+            'file' => isset($data['file']['base64']) ? $this->mylib->decodebase64($data['file']['base64'], 'galeri') : "",
+            'lokasiid' => $lokasiid,
+            'status' => 1,
         ];
         $this->db->insert('foto', $item);
-        if($this->db->trans_status()){
+        if ($this->db->trans_status()) {
             $this->db->trans_commit();
             return true;
-        }else{
+        } else {
             $this->db->trans_rollback();
             return false;
         }
