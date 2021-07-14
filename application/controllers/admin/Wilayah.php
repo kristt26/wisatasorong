@@ -24,24 +24,46 @@ class Wilayah extends CI_Controller
         echo json_encode($result);
     }
 
-    public function tambah()
-    {
-
-    }
 
     public function post()
     {
-        # code...
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->wilayah->post($data);
+        echo json_encode($result);
     }
 
     public function put()
     {
-        # code...
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->wilayah->put($data);
+        echo json_encode($result);
     }
 
     public function delete($id = null)
     {
-        # code...
+        $id= $this->input->get('id');
+        $result = $this->wilayah->delete($id);
+        echo json_encode($result);
+    }
+    public function postKelurahan()
+    {
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->wilayah->postKelurahan($data);
+        echo json_encode($result);
+    }
+
+    public function putKelurahan()
+    {
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->wilayah->putKelurahan($data);
+        echo json_encode($result);
+    }
+
+    public function deleteKelurahan($id = null)
+    {
+        $id= $this->input->get('id');
+        $result = $this->wilayah->deleteKelurahan($id);
+        echo json_encode($result);
     }
 
 }

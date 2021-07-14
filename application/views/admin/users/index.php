@@ -1,6 +1,5 @@
  <div ng-controller="usersController">
      <div class="row">
-         <div id="map"></div>
          <div class="col-lg-12">
 
              <div class="card card-warning">
@@ -19,7 +18,7 @@
                                  <th>Username</th>
                                  <th>Email</th>
                                  <th>Akses</th>
-                                 <th><i class="fa fa-gear"></i></th>
+                                 <!-- <th><i class="fa fa-gear"></i></th> -->
                              </tr>
                          </thead>
                          <tbody>

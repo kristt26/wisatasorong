@@ -15,17 +15,35 @@ class Wilayah_model extends CI_Model
     }
     public function post($data)
     {
-        # code...
+        $this->db->insert('kecamatan', $data);
+        $data['id'] = $this->db->insert_id();
+        $data['kelurahans']= array();
+        return $data;
     }
     public function put($data)
     {
-        # code...
+        $this->db->update('kecamatan', ['nama'=>$data['nama']], ['id'=>$data['id']]);
+        return $data;
     }
     public function delete($id)
     {
-        # code...
+        return $this->db->delete('kecamatan', ['id'=>$id]);
     }
-
+    public function postKelurahan($data)
+    {
+        $this->db->insert('kelurahan', $data);
+        $data['id'] = $this->db->insert_id();
+        return $data;
+    }
+    public function putKelurahan($data)
+    {
+        $this->db->update('kelurahan', ['nama'=>$data['nama']], ['id'=>$data['id']]);
+        return $data;
+    }
+    public function deleteKelurahan($id)
+    {
+        return $this->db->delete('kelurahan', ['id'=>$id]);
+    }
 }
 
 /* End of file Wilayah_model.php */

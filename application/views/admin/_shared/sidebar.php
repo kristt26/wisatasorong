@@ -48,7 +48,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?=base_url('admin/kecamatan')?>" ng-class="{'nav-link active': title=='Laporan Rekapitulasi', 'nav-link': title!='Laporan Rekapitulasi'}">
+                  <a href="<?=base_url('admin/wilayah')?>" ng-class="{'nav-link active': title=='Laporan Rekapitulasi', 'nav-link': title!='Laporan Rekapitulasi'}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Kecamatan</p>
                   </a>

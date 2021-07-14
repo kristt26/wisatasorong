@@ -34,6 +34,7 @@
     <!-- <link rel="stylesheet" href="<?=base_url()?>public/plugins/datatables-buttons/css/buttons.bootstrap4.min.cssss"> -->
     <link rel="stylesheet" href="<?=base_url()?>public/plugins/angular-datatables/dist/css/angular-datatables.min.css">
     <link rel="stylesheet" href="<?=base_url()?>public/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?=base_url()?>public/dist/css/style.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link href="<?=base_url('public/js/boxmap/dist/mapbox-gl.css')?>" rel="stylesheet">
@@ -43,6 +44,7 @@
         type="text/css">
     <link rel="stylesheet" type="text/css"
         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?=base_url()?>public/plugins/ekko-lightbox/ekko-lightbox.css">
 
     <style>
     .containerr {
@@ -249,6 +251,8 @@ $this->load->view('admin/_shared/sidebar');
     <script src="https://unpkg.com/@esri/arcgis-rest-request@3.0.0/dist/umd/request.umd.js"></script>
     <script src="https://unpkg.com/@esri/arcgis-rest-geocoding@3.0.0/dist/umd/geocoding.umd.js"></script>
     <script src="https://unpkg.com/@esri/arcgis-rest-auth@3.0.0/dist/umd/auth.umd.js"></script>
+    <script src="<?=base_url()?>public/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+    <script src="<?=base_url()?>public/plugins/filterizr/jquery.filterizr.min.js"></script>
     <script>
     $(function() {
         //Initialize Select2 Elements
@@ -327,6 +331,14 @@ $this->load->view('admin/_shared/sidebar');
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         });
 
+    })
+    $(function() {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
+        });
     })
     </script>
 </body>

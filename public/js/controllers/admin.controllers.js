@@ -5,7 +5,9 @@ angular.module('adminctrl', [])
     .controller('tambahWisataController', tambahWisataController)
     .controller('umkmController', umkmController)
     .controller('tambahUmkmController', tambahUmkmController)
-    .controller('usersController', usersController);
+    .controller('usersController', usersController)
+    .controller('wilayahController', wilayahController)
+    .controller('galeryController', galeryController);
 
 function pageController($scope, helperServices) {
     $scope.Title = "Page Header";
@@ -46,18 +48,18 @@ function homeController($scope, $http, helperServices) {
 
     map.addControl(directions, 'top-left');
     // directions.setOrigin([cord.coords.longitude, cord.coords.latitude]);
-    userLocation.on('geolocate', function(a) {
+    userLocation.on('geolocate', function (a) {
         directions.setOrigin([a.coords.longitude, a.coords.latitude]);
         console.log(a)
     });
 
     var marker = new mapboxgl.Marker({
-            color: "maroon",
-            draggable: true
-        }).setLngLat([131.25478, -0.86210])
+        color: "maroon",
+        draggable: true
+    }).setLngLat([131.25478, -0.86210])
         .addTo(map);
 
-    map.on('load', function() {
+    map.on('load', function () {
         map.addSource('maine', {
             'type': 'geojson',
             'data': helperServices.url + 'public/js/sorong.geojson'
@@ -152,7 +154,7 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
             });
     })
 
-    map.on('load', function() {
+    map.on('load', function () {
         map.addSource('maine', {
             'type': 'geojson',
             'data': helperServices.url + 'public/js/sorong.geojson'
@@ -270,7 +272,7 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
             });
     })
 
-    map.on('load', function() {
+    map.on('load', function () {
         map.addSource('maine', {
             'type': 'geojson',
             'data': helperServices.url + 'public/js/sorong.geojson'
@@ -335,4 +337,117 @@ function usersController($scope, $http, helperServices, usersServices) {
         $scope.datas = res;
     })
 
+}
+
+function wilayahController($scope, $http, helperServices, wilayahServices, message) {
+    $scope.datas = [];
+    $scope.model = {};
+    $scope.model1 = {};
+    $scope.itemKelurahan = [];
+    $scope.showKelurahan = false;
+    wilayahServices.get().then(res => {
+        res.kecamatans.forEach(element => {
+            element.kelurahans = res.kelurahans.filter(x => x.kecamatanid == element.id);
+        });
+        $scope.datas = res.kecamatans;
+        // console.log($scope.datas);
+    })
+    $scope.setKelurahan = (item, id) => {
+        $scope.itemKelurahan = item;
+        $scope.model1.kecamatanid = id;
+        $scope.showKelurahan = true;
+    }
+    $scope.save = (item, set) => {
+        message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
+            if (set == "kecamatan") {
+                if (item.id) {
+                    wilayahServices.put(item).then(res => {
+                        var data = $scope.datas.find(x => x.id == res.id);
+                        data.nama = res.nama;
+                        $scope.model = {};
+                    });
+                } else {
+                    wilayahServices.post(item).then(res => {
+                        $scope.datas.push(angular.copy(res));
+                        $scope.model = {};
+                    });
+                }
+            } else {
+                if (item.id) {
+                    wilayahServices.putKelurahan(item).then(res => {
+                        var dataKecamatan = $scope.datas.find(x => x.id == res.kecamatanid);
+                        if (dataKecamatan) {
+                            var dataKelurahan = dataKecamatan.find(x => x.id == res.id);
+                            if (dataKelurahan) {
+                                dataKelurahan.nama = res.nama
+                                $scope.model = {};
+                            }
+                        }
+                    });
+                } else {
+                    wilayahServices.postKelurahan(item).then(res => {
+                        var data = $scope.datas.find(x => x.id == res.kecamatanid);
+                        if (data) {
+                            data.kelurahans.push(angular.copy(res));
+                            $scope.model = {};
+                        }
+                    });
+                }
+            }
+        })
+
+    }
+    $scope.edit = (item, set) => {
+        if (set == 'kecamatan')
+            $scope.model = angular.copy(item);
+        else
+            $scope.model1 = angular.copy(item);
+
+    }
+    $scope.clear = ()=>{
+        $scope.model = {};
+        $scope.model1 = {};
+        $scope.showKelurahan = false;
+    }
+}
+
+function galeryController($scope, $http, helperServices, galeryServices, message) {
+    var url = new URLSearchParams(window.location.search);
+    console.log(url.get('id'));
+    $scope.datas = [];
+    $scope.model = {};
+    $scope.model1 = {};
+    $scope.itemKelurahan = [];
+    $scope.showKelurahan = false;
+    galeryServices.get(url.get('id')).then(res => {
+        $scope.datas = res;
+        console.log(res);
+    })
+
+    $scope.cekFile = (item)=>{
+        console.log(item);
+    }
+    
+    $scope.save = (item) => {
+        item.lokasiid = $scope.datas.lokasi.id;
+        message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
+            galeryServices.post(item).then(res => {
+                $scope.model = {};
+                message.info("Proses Berhasil");
+            });
+        })
+    }
+
+    // $scope.edit = (item, set) => {
+    //     if (set == 'kecamatan')
+    //         $scope.model = angular.copy(item);
+    //     else
+    //         $scope.model1 = angular.copy(item);
+
+    // }
+    // $scope.clear = ()=>{
+    //     $scope.model = {};
+    //     $scope.model1 = {};
+    //     $scope.showKelurahan = false;
+    // }
 }
