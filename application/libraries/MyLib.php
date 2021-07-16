@@ -130,6 +130,13 @@ class MyLib
         return $temp;
     }
 
+    // function counter($filename){		
+    //     $book_content = (int)file_get_contents($filename)+1;
+    //     $a = file_put_contents($filename, $book_content);
+    //     return $a;
+        
+
+    // }
 }
 
 /* End of file MyLib.php */

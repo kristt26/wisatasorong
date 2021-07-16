@@ -108,6 +108,9 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
     $scope.tampilinput = false;
     $scope.kecamatans = [];
     $scope.kecamatan = {};
+    $scope.kelurahan = {};
+    var url = new URLSearchParams(window.location.search);
+    
     const apiKey = "AAPKe04c23b9e1e14827a485e3c06a91369a44TROFRCnx1O_wzKtYcV81b7ApPKaBQwXH064LgF6Y-BxD_3-5yyVhpmIrVi1V19";
 
     const basemapEnum = "ArcGIS:Navigation";
@@ -199,16 +202,36 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
             element.kelurahans = res.kelurahans.filter(x => x.kecamatanid == element.id);
         });
         $scope.kecamatans = res.kecamatans;
-        console.log($scope.kecamatans);
+        if(url.get('id')){
+            wisataServices.getId(url.get('id')).then(res=>{
+                $scope.$applyAsync(() => {
+                    res.latitude = parseFloat(res.latitude);
+                    res.longitude = parseFloat(res.longitude);
+                    $scope.kecamatan = $scope.kecamatans.find(x=>x.id == res.kecamatanid);
+                    $scope.kelurahan = $scope.kecamatan.kelurahans.find(x=>x.id == res.kelurahanid);
+                    $scope.model = res;
+                    console.log($scope.model);
+                })
+
+            })
+        }
     })
     $scope.save = (item) => {
         item.type = "Wisata";
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
-            wisataServices.post(item).then(x => {
-                message.confirm("Berhasil Menyimpan Data", true).then(x => {
-                    document.location.href = helperServices.url + "admin/wisata";
-                });
-            })
+            if(item.id){
+                wisataServices.put(item).then(x => {
+                    message.confirm("Berhasil Menyimpan Data", true).then(x => {
+                        document.location.href = helperServices.url + "admin/wisata";
+                    });
+                })
+            }else{
+                wisataServices.post(item).then(x => {
+                    message.confirm("Berhasil Mengubah Data", true).then(x => {
+                        document.location.href = helperServices.url + "admin/wisata";
+                    });
+                })
+            }
         })
     }
 }
@@ -221,11 +244,13 @@ function umkmController($scope, $http, helperServices, umkmServices) {
 
 }
 
-function tambahUmkmController($scope, $http, helperServices, wilayahServices, message, umkmServices) {
+function tambahUmkmController($scope, $http, helperServices, wilayahServices, message, umkmServices, wisataServices) {
     $scope.model = {};
     $scope.tampilinput = false;
     $scope.kecamatans = [];
     $scope.kecamatan = {};
+
+    var url = new URLSearchParams(window.location.search);
     const apiKey = "AAPKe04c23b9e1e14827a485e3c06a91369a44TROFRCnx1O_wzKtYcV81b7ApPKaBQwXH064LgF6Y-BxD_3-5yyVhpmIrVi1V19";
 
     const basemapEnum = "ArcGIS:Navigation";
@@ -317,16 +342,35 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
             element.kelurahans = res.kelurahans.filter(x => x.kecamatanid == element.id);
         });
         $scope.kecamatans = res.kecamatans;
-        console.log($scope.kecamatans);
+        if(url.get('id')){
+            wisataServices.getId(url.get('id')).then(res=>{
+                $scope.$applyAsync(() => {
+                    res.latitude = parseFloat(res.latitude);
+                    res.longitude = parseFloat(res.longitude);
+                    $scope.kecamatan = $scope.kecamatans.find(x=>x.id == res.kecamatanid);
+                    $scope.kelurahan = $scope.kecamatan.kelurahans.find(x=>x.id == res.kelurahanid);
+                    $scope.model = res;
+                    console.log($scope.model);
+                })
+            })
+        }
     })
     $scope.save = (item) => {
         item.type = "UMKM";
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
-            umkmServices.post(item).then(x => {
-                message.confirm("Berhasil Menyimpan Data", true).then(x => {
-                    document.location.href = helperServices.url + "admin/umkm";
-                });
-            })
+            if(item.id){
+                umkmServices.put(item).then(x => {
+                    message.confirm("Berhasil Menyimpan Data", "Ok").then(x => {
+                        document.location.href = helperServices.url + "admin/umkm";
+                    });
+                })
+            }else{
+                umkmServices.post(item).then(x => {
+                    message.confirm("Berhasil Menyimpan Data", "Ok").then(x => {
+                        document.location.href = helperServices.url + "admin/umkm";
+                    });
+                })
+            }
         })
     }
 }

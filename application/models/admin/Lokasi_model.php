@@ -7,11 +7,28 @@ class Lokasi_model extends CI_Model
 
     public function get($type)
     {
+        if(is_null($type)){
+            return $this->db->query("SELECT
+                `lokasi`.*,
+                (SELECT file FROM foto WHERE foto.lokasiid=lokasi.id AND status=1) AS foto
+            FROM
+                `lokasi`")->result_array();
+        }else{
+            return $this->db->query("SELECT
+                `lokasi`.*,
+                (SELECT file FROM foto WHERE foto.lokasiid=lokasi.id AND status=1) AS foto
+            FROM
+                `lokasi` WHERE lokasi.type = '$type'")->result_array();
+        }
+    }
+
+    public function getId($id)
+    {
         return $this->db->query("SELECT
             `lokasi`.*,
             (SELECT file FROM foto WHERE foto.lokasiid=lokasi.id AND status=1) AS foto
         FROM
-            `lokasi` WHERE lokasi.type = '$type'")->result_array();
+            `lokasi` WHERE lokasi.id = '$id'")->row_array();
     }
 
     public function post($data)
@@ -27,6 +44,7 @@ class Lokasi_model extends CI_Model
             'kelurahanid' => $data['kelurahanid'],
             'userid' => $this->session->userdata('id'),
             'type' => $data['type'],
+            'deskripsi' => $data['deskripsi']
         ];
         $this->db->insert('lokasi', $item);
         $lokasiid = $this->db->insert_id();
@@ -36,6 +54,40 @@ class Lokasi_model extends CI_Model
             'status' => 1,
         ];
         $this->db->insert('foto', $item);
+        if ($this->db->trans_status()) {
+            $this->db->trans_commit();
+            return true;
+        } else {
+            $this->db->trans_rollback();
+            return false;
+        }
+    }
+
+    public function put($data){
+        $this->load->library('MyLib');
+        $this->db->trans_begin();
+        $item = [
+            'nama' => $data['nama'],
+            'alamat' => $data['alamat'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+            'kecamatanid' => $data['kecamatanid'],
+            'kelurahanid' => $data['kelurahanid'],
+            'userid' => $this->session->userdata('id'),
+            'type' => $data['type'],
+            'deskripsi' => $data['deskripsi']
+        ];
+        $this->db->update('lokasi', $item, ['id'=>$data['id']]);
+        $lokasiid = $this->db->insert_id();
+        if(!is_null($data['file'])){
+            $item = [
+                'file' => isset($data['file']['base64']) ? $this->mylib->decodebase64($data['file']['base64'], 'galeri') : "",
+                'lokasiid' => $lokasiid,
+                'status' => 1,
+            ];
+            $this->db->delete('foto', ['lokasiid'=>$data['id'], 'status'=>1]);
+            $this->db->insert('foto', $item);
+        }
         if ($this->db->trans_status()) {
             $this->db->trans_commit();
             return true;

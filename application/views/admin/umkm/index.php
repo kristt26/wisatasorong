@@ -33,10 +33,10 @@
                                      <button class="btn btn-info btn-sm"
                                          ng-click="setKelurahan(item.kelurahans, item.id)"><i
                                              class="fa fa-list"></i></button>
-                                     <button class="btn btn-warning btn-sm ml-1" ng-click="edit(item, 'kecamatan')"><i
-                                             class="fa fa-edit"></i></button>
+                                     <a href="<?=base_url('admin/umkm/tambah?id={{item.id}}')?>" class="btn btn-warning btn-sm ml-1" ng-click="edit(item, 'kecamatan')"><i
+                                             class="fa fa-edit"></i></a>
                                      <a href="<?=base_url('admin/galery/index?id={{item.id}}')?>" class="btn btn-primary btn-sm ml-1" ng-click="edit(item, 'kecamatan')"><i
-                                             class="fa fa-picture-o"></i></button>
+                                             class="fa fa-picture-o"></i></a>
                                  </td>
                              </tr>
                          </tbody>

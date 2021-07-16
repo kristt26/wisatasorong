@@ -17,9 +17,15 @@ class Wisata extends CI_Controller {
         $this->load->view('admin/_shared/layout', $content);
     }
 
-    public function get($id = null)
+    public function get()
     {
         $result = $this->lokasi->get("Wisata");
+        echo json_encode($result);
+    }
+
+    public function getId($id = null)
+    {
+        $result = $this->lokasi->getId($id);
         echo json_encode($result);
     }
 
@@ -33,16 +39,14 @@ class Wisata extends CI_Controller {
     {
         $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
         $result = $this->lokasi->post($data);
-        if($result)
-            echo json_encode(true);
-        else
-            http_response_code(400);
-            echo json_encode(false);
+        echo json_encode($result);
     }
 
     public function put()
     {
-        # code...
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->lokasi->put($data);
+        echo json_encode($result);
     }
 
     public function delete($id = null)

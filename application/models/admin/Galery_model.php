@@ -11,6 +11,16 @@ class Galery_model extends CI_Model {
         ];
     }
 
+    public function getAll()
+    {
+        return $this->db->query("SELECT
+            `foto`.*,
+            `lokasi`.`type`
+        FROM
+            `foto`
+            LEFT JOIN `lokasi` ON `lokasi`.`id` = `foto`.`lokasiid` where foto.status='0'")->result_array();
+    }
+
     public function post($data)
     {
         $this->load->library('MyLib');

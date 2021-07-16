@@ -136,7 +136,7 @@ if (!$this->session->userdata('is_login')) {
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?=base_url('auth/logout')?>" role="button" style="color: #fff">
+                    <a class="nav-link" href="<?=base_url('authentication/logout')?>" role="button" style="color: #fff">
                         <strong>LOGOUT</strong>
                     </a>
                 </li>
@@ -156,7 +156,7 @@ if (!$this->session->userdata('is_login')) {
                 <!-- <h5 class="brand-image elevation-">Agen</h5> -->
                 <img src="<?=base_url()?>public/img/logo.png" alt="BKAD" class="brand-image elevation-0"
                     style="opacity: .9;">
-                <span class="brand-text font-weight-light" style="color:#fff"><strong>Asset Kendaraan</strong></span>
+                <span class="brand-text font-weight-light" style="color:#fff"><strong> </strong></span>
             </a>
 
             <!-- Sidebar -->

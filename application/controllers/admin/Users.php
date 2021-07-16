@@ -31,15 +31,9 @@ class Users extends CI_Controller
 
     public function post()
     {
-        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
-        $result = $this->lokasi->post($data);
-        if ($result) {
-            echo json_encode(true);
-        } else {
-            http_response_code(400);
-        }
-
-        echo json_encode(false);
+        $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->users->post($data);
+        echo json_encode($result);
     }
 
     public function put()

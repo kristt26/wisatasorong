@@ -42,7 +42,9 @@ class Umkm extends CI_Controller {
 
     public function put()
     {
-        # code...
+        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $result = $this->lokasi->put($data);
+        echo json_encode($result);
     }
 
     public function delete($id = null)

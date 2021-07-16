@@ -239,6 +239,7 @@ function wisataServices($http, $q, helperServices, AuthService, message) {
     service.data = [];
     return {
         get: get,
+        getId:getId,
         post: post,
         put: put
     };
@@ -252,6 +253,23 @@ function wisataServices($http, $q, helperServices, AuthService, message) {
         }).then(
             (res) => {
                 service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err.data);
+            }
+        );
+        return def.promise;
+    }
+
+    function getId(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'getId/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 def.resolve(res.data);
             },
             (err) => {
@@ -285,16 +303,11 @@ function wisataServices($http, $q, helperServices, AuthService, message) {
         var def = $q.defer();
         $http({
             method: 'put',
-            url: controller + '?id=' + params.id,
+            url: controller + 'put',
             data: params,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == params.id);
-                if (data) {
-                    data.kelengkapan = params.kelengkapan;
-                    data.penjelasan = params.penjelasan;
-                }
                 def.resolve(res.data);
             },
             (err) => {
@@ -357,16 +370,11 @@ function umkmServices($http, $q, helperServices, AuthService, message) {
         var def = $q.defer();
         $http({
             method: 'put',
-            url: controller + '?id=' + params.id,
+            url: controller + 'put',
             data: params,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == params.id);
-                if (data) {
-                    data.kelengkapan = params.kelengkapan;
-                    data.penjelasan = params.penjelasan;
-                }
                 def.resolve(res.data);
             },
             (err) => {

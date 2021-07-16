@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html ng-app="apps" ng-controller="pageController">
+<html ng-app="apps" ng-controller="indexController">
 
 <head>
     <meta charset="utf-8">
     <title>Display driving directions</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link href="<?=base_url('public/js/boxmap/dist/mapbox-gl.css')?>" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url('public/js/boxmap/dist/mapbox-gl-directions.css')?>" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext"
         rel="stylesheet">
@@ -22,6 +21,12 @@
     <link rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
         type="text/css">
+    <link href="<?=base_url('public/js/boxmap/dist/mapbox-gl.css')?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?=base_url('public/js/boxmap/dist/mapbox-gl-directions.css')?>" type="text/css">
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
+        type="text/css">
+    <link rel="stylesheet" href="<?=base_url()?>public/plugins/sweetalert2/sweetalert2.min.css">
     <style>
     #map {
         top: 0;
@@ -45,6 +50,15 @@
     .geocoder {
         display: flex;
         justify-content: center;
+    }
+
+    .marker {
+        background-image: url('mapbox-icon.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
     }
 
 
@@ -74,7 +88,8 @@
         <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
         <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>
+        <a class="navbar-brand logo-image" href="index.html"><img src="<?=base_url('public/guest/images/logo.png')?>"
+                alt="alternative"></a>
 
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -87,64 +102,21 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#header">HOME <span
-                            class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" href="index.html#about" id="navbarDropdown"
-                        role="button" aria-haspopup="true" aria-expanded="false">MASTER DATA</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">Visi
-                                Misi</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">Kecamatan</span></a>
-                    </div>
+                    <a class="nav-link page-scroll" href="<?=base_url()?>">HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="<?=base_url('admin/wisata')?>">WISATA</a>
+                    <a class="nav-link page-scroll" href="<?=base_url('visimisi')?>">VISI MISI</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#services">UMKM</a>
+                    <a class="nav-link page-scroll" href="<?=base_url('wisata')?>">WISATA</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#callMe">KECAMATAN</a>
+                    <a class="nav-link page-scroll" href="<?=base_url('umkm')?>">UMKM</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#projects">PROJECTS</a>
-                </li>
-
-                <!-- Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" href="index.html#about" id="navbarDropdown"
-                        role="button" aria-haspopup="true" aria-expanded="false">ABOUT</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="terms-conditions.html"><span class="item-text">TERMS
-                                CONDITIONS</span></a>
-                        <div class="dropdown-items-divide-hr"></div>
-                        <a class="dropdown-item" href="privacy-policy.html"><span class="item-text">PRIVACY
-                                POLICY</span></a>
-                    </div>
-                </li>
-                <!-- end of dropdown menu -->
-
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="index.html#contact">CONTACT</a>
+                <a class="nav-link page-scroll" href="<?= base_url(). !$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout' ?>"> <?= !$this->session->userdata('is_login') ? 'LOGIN': 'LOGOUT'?></a>
                 </li>
             </ul>
-            <span class="nav-item social-icons">
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-facebook-f fa-stack-1x"></i>
-                    </a>
-                </span>
-                <span class="fa-stack">
-                    <a href="#your-link">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-twitter fa-stack-1x"></i>
-                    </a>
-                </span>
-            </span>
         </div>
     </nav>
     <!-- end of navbar -->
@@ -152,12 +124,12 @@
 
 
     <!-- Breadcrumbs -->
-    <div class="ex-basic-1" style="padding-top: 4rem !important; padding-bottom: 0rem !important; padding-right:2rem">
+    <div class="ex-basic-1" style="padding-top: 5rem !important; padding-bottom: 0rem !important; padding-right:2rem">
         <div class="d-flex justify-content-end">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumbs">
-                        <a href="index.html">Home</a><i class="fa fa-angle-double-right"></i><span>Privacy Policy</span>
+                        <a href="<?=base_url()?>">Home</a><i class="fa fa-angle-double-right"></i><span><?=$breadcrumbs?></span>
                     </div>
                 </div>
             </div>
@@ -178,7 +150,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="p-small">Copyright © 2020 <a href="https://inovatik.com">Template by Inovatik</a></p>
+                    <p class="p-small">Copyright © 2021 <a href="https://inovatik.com">Template by Inovatik</a></p>
                 </div>
                 <!-- end of col -->
             </div>
@@ -192,6 +164,7 @@
 
     <!-- Scripts -->
     <script src="<?=base_url('public/guest/js/jquery.min.js')?>"></script>
+    <script src="<?=base_url()?>public/plugins/angular/angular.min.js"></script>
     <script src="<?=base_url('public/guest/js/popper.min.js')?>"></script>
     <script src="<?=base_url('public/guest/js/bootstrap.min.js')?>"></script>
     <script src="<?=base_url('public/guest/js/jquery.easing.min.js')?>"></script>
@@ -200,12 +173,16 @@
     <script src="<?=base_url('public/guest/js/morphext.min.js')?>"></script>
     <script src="<?=base_url('public/guest/js/isotope.pkgd.min.js')?>"></script>
     <script src="<?=base_url('public/guest/js/validator.min.js')?>"></script>
+    <script src="<?=base_url()?>public/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="<?=base_url('public/guest/js/scripts.js')?>"></script>
     <!-- Custom scripts -->
-    <script src="<?=base_url()?>public/libs/angular/angular.min.js"></script>
-    <script src="<?=base_url()?>public/js/apps.js"></script>
+    <script src="<?=base_url()?>public/js/guest.js"></script>
     <script src="<?=base_url()?>public/js/services/helper.services.js"></script>
-    <script src="<?=base_url()?>public/js/controllers/admin.controllers.js"></script>
+    <script src="<?=base_url()?>public/js/services/auth.services.js"></script>
+    <script src="<?=base_url()?>public/js/services/admin.services.js"></script>
+    <script src="<?=base_url()?>public/js/services/message.services.js"></script>
+    <script src="<?=base_url()?>public/js/controllers/guest.controllers.js"></script>
+
     <script src="<?=base_url('public/js/boxmap/dist/mapbox-gl.js')?>"></script>
     <script src="<?=base_url('public/js/boxmap/dist/mapbox-gl-directions.js')?>"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js">
@@ -213,6 +190,14 @@
     <script src="https://unpkg.com/@esri/arcgis-rest-request@3.0.0/dist/umd/request.umd.js"></script>
     <script src="https://unpkg.com/@esri/arcgis-rest-geocoding@3.0.0/dist/umd/geocoding.umd.js"></script>
     <script src="https://unpkg.com/@esri/arcgis-rest-auth@3.0.0/dist/umd/auth.umd.js"></script>
+
+    <script src="<?=base_url()?>public/plugins/angular-datatables/dist/angular-datatables.min.js"></script>
+    <script src="<?=base_url()?>public/libs/swangular/swangular.js"></script>
+    <script src="<?=base_url()?>public/libs/angular-locale_id-id.js"></script>
+    <script src="<?=base_url()?>public/libs/input-mask/angular-input-masks-standalone.min.js"></script>
+    <script src="<?=base_url()?>public/libs/angular-base64-upload.js"></script>
+    <script src="<?=base_url()?>public/libs/jquery.PrintArea.js"></script>
+    <script src="<?=base_url()?>public/libs/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
     <!-- <script src="<?=base_url('public/js/maps.js')?>"></script> -->
     <!-- <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script> -->
 </body>
