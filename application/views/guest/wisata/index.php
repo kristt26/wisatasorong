@@ -8,7 +8,14 @@
             </div> <!-- end of row -->
         </div>
         <div class="col-sm-12" style="height: 500px; padding: 0px !important;">
-            <div id="mapp"></div>
+            <div style="position: relative; width:100%; height: 500px;">
+                <div id="mapp"></div>
+                <div class="mapboxgl-ctrl-top-right" style="top: 32px;">
+                    <div class="mapboxgl-ctrl  mapboxgl-ctrl-group">
+                        <input type="checkbox" class="mapboxgl-ctrl-geolocate" style="margin: 8px;">
+                    </div>
+                </div>
+            </div>
             <!-- <div id="geocoder" class="geocoder"></div> -->
         </div>
     </div>
@@ -18,7 +25,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Card -->
-                    <?php for ($i=0; $i < (count($wisatas) > 3 ? 3 : 1) ; $i++):?>
+                    <?php for ($i=0; $i < (count($wisatas) > 3 ? 3 : count($wisatas)) ; $i++):?>
                     <div class="card">
                         <div class="card-image">
                             <img class="img-fluid" src="<?=base_url('public/img/galeri/').$wisatas[$i]['foto']?>"

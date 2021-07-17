@@ -71,7 +71,11 @@
 </head>
 
 <body data-spy="scroll" data-target=".fixed-top">
-
+<?php
+if (!$this->session->userdata('is_login')) {
+    redirect('authentication');
+}
+?>
     <div class="spinner-wrapper">
         <div class="spinner">
             <div class="bounce1"></div>
@@ -114,7 +118,7 @@
                     <a class="nav-link page-scroll" href="<?=base_url('umkm')?>">UMKM</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link page-scroll" href="<?= base_url(). !$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout' ?>"> <?= !$this->session->userdata('is_login') ? 'LOGIN': 'LOGOUT'?></a>
+                <a class="nav-link page-scroll" href="<?= base_url(!$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout') ?>"> <?= !$this->session->userdata('is_login') ? 'LOGIN': 'LOGOUT'?></a>
                 </li>
             </ul>
         </div>

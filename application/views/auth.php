@@ -11,6 +11,11 @@
 </head>
 
 <body ng-controller="userLogin">
+    <?php
+    if ($this->session->userdata('is_login')) {
+        redirect('welcome');
+    }
+    ?>
     <div class="login-page">
         <div class="form">
             <form class="register-form" ng-submit="save()">

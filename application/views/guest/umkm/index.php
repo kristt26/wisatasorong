@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Card -->
-                    <?php for ($i=0; $i < (count($umkm) > 3 ? 3 : 1) ; $i++):?>
+                    <?php for ($i=0; $i < (count($umkm) > 3 ? 3 : count($umkm)) ; $i++):?>
                     <div class="card">
                         <div class="card-image">
                             <img class="img-fluid" src="<?=base_url('public/img/galeri/').$umkm[$i]['foto']?>"

@@ -38,6 +38,11 @@
 </head>
 
 <body data-spy="scroll" data-target=".fixed-top">
+<?php
+if (!$this->session->userdata('is_login')) {
+    redirect('authentication');
+}
+?>
     <!-- Preloader -->
     <!-- <div class="spinner-wrapper">
         <div class="spinner">
@@ -179,7 +184,7 @@
                 <div class="col-lg-12">
 
                     <!-- Card -->
-                    <?php for ($i=0; $i < (count($wisatas) > 3 ? 3 : 1) ; $i++):?>
+                    <?php for ($i=0; $i < (count($wisatas) > 3 ? 3 : count($wisatas)) ; $i++):?>
                     <div class="card">
                         <div class="card-image">
                             <img class="img-fluid" src="<?=base_url('public/img/galeri/').$wisatas[$i]['foto']?>"
@@ -224,7 +229,7 @@
                 <div class="col-lg-12">
 
                     <!-- Card -->
-                    <?php for ($i=0; $i < (count($umkms) > 3 ? 3 : 1) ; $i++):?>
+                    <?php for ($i=0; $i < (count($umkms) > 3 ? 3 : count($umkms)) ; $i++):?>
                     <div class="card">
                         <div class="card-image">
                             <img class="img-fluid" src="<?=base_url('public/img/galeri/').$umkms[$i]['foto']?>"

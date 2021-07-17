@@ -279,24 +279,6 @@ function wisataController($scope, $http, helperServices, message, wisataServices
 
 
     })
-    $scope.save = (item) => {
-        item.type = "Wisata";
-        message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
-            if (item.id) {
-                wisataServices.put(item).then(x => {
-                    message.confirm("Berhasil Menyimpan Data", true).then(x => {
-                        document.location.href = helperServices.url + "admin/wisata";
-                    });
-                })
-            } else {
-                wisataServices.post(item).then(x => {
-                    message.confirm("Berhasil Mengubah Data", true).then(x => {
-                        document.location.href = helperServices.url + "admin/wisata";
-                    });
-                })
-            }
-        })
-    }
 }
 
 function umkmController($scope, $http, helperServices, message, umkmServices) {
