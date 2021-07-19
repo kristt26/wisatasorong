@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="<?=base_url()?>public/index3.html" class="brand-link">
-        <!-- <img src="<?=base_url()?>public/img/logo.png" alt="AdminLTE Logo" class="brand-image elevation-3"
-          style="opacity: .8"> -->
+      <a href="<?=base_url()?>" class="brand-link">
+        <img src="<?=base_url()?>public/guest/images/logo.png" alt="AdminLTE Logo" class="brand-image elevation-3"
+          style="opacity: .8">
         <span class="brand-text font-weight-light">Wisata Sorong</span>
       </a>
 
@@ -25,7 +25,7 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="<?=base_url('home')?>" ng-class="{'nav-link active': header=='Home', 'nav-link': header!='Home'}">
+              <a href="<?=base_url('admin/home')?>" ng-class="{'nav-link active': header=='Home', 'nav-link': header!='Home'}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                   Home

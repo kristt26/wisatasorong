@@ -104,6 +104,7 @@ function wisataController($scope, $http, helperServices, message, wisataServices
     $scope.kecamatans = [];
     $scope.kecamatan = {};
     $scope.kelurahan = {};
+    $scope.cekdirection = false;
     var url = new URLSearchParams(window.location.search);
 
     const apiKey = "AAPKe04c23b9e1e14827a485e3c06a91369a44TROFRCnx1O_wzKtYcV81b7ApPKaBQwXH064LgF6Y-BxD_3-5yyVhpmIrVi1V19";
@@ -115,7 +116,7 @@ function wisataController($scope, $http, helperServices, message, wisataServices
         style: 'mapbox://styles/mapbox/streets-v11',
         // style: `https://basemaps-api.arcgis.com/arcgis/rest/services/styles/${basemapEnum}?type=style&token=${apiKey}`,
         center: [131.25478, -0.86210],
-        zoom: 10
+        zoom: 11
     });
 
     var userLocation = new mapboxgl.GeolocateControl({
@@ -141,7 +142,7 @@ function wisataController($scope, $http, helperServices, message, wisataServices
         }
     });
 
-    map.addControl(directions, 'top-left');
+    
 
     userLocation.on('geolocate', function (a) {
         directions.setOrigin([a.coords.longitude, a.coords.latitude]);
@@ -179,6 +180,14 @@ function wisataController($scope, $http, helperServices, message, wisataServices
             });
     })
 
+    $scope.setDirection = () => {
+        if($scope.cekdirection){
+            map.addControl(directions, 'top-left');
+        }else{
+            map.removeControl(directions);
+        }
+    }
+
     map.on('load', function () {
         map.addSource('maine', {
             'type': 'geojson',
@@ -207,13 +216,7 @@ function wisataController($scope, $http, helperServices, message, wisataServices
             }
         });
     });
-
-    $scope.showMap = () => {
-        $("#addLatLong").modal('show');
-        setTimeout(() => {
-            map.resize();
-        }, 300);
-    }
+    
     var geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         mapboxgl: mapboxgl
@@ -231,7 +234,8 @@ function wisataController($scope, $http, helperServices, message, wisataServices
                 },
                 properties: {
                     title: element.nama,
-                    img: element.foto
+                    img: element.foto,
+                    address: element.alamat
                     // description: '1714 14th St NW, Washington DC',
                     // image: 'https://farm9.staticflickr.com/8604/15769066303_3e4dcce464_n.jpg',
                     // icon: {
@@ -250,24 +254,24 @@ function wisataController($scope, $http, helperServices, message, wisataServices
             // create a HTML element for each feature
             var el = document.createElement('div');
             el.className = 'marker';
-            
+
 
             // make a marker for each feature and add it to the map
-            var a = new mapboxgl.Marker({html: "Test"})
+            var a = new mapboxgl.Marker({ html: "Test" })
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups
                         .setHTML(
-                            '<img src="' + foto + '" width="100%">' + 
+                            '<img src="' + foto + '" width="100%">' +
                             '<h3>' +
                             marker.properties.title +
                             '</h3><p>' +
-                            marker.properties.description +
+                            marker.properties.address +
                             '</p>'
                         )
                 )
                 .addTo(map);
-                // a.setHTML('<h5>' + marker.properties.title + '</h5>');
+            // a.setHTML('<h5>' + marker.properties.title + '</h5>');
         });
         // var marker = new mapboxgl.Marker({
         //     color: "maroon",
@@ -300,7 +304,7 @@ function umkmController($scope, $http, helperServices, message, umkmServices) {
         center: [131.25478, -0.86210],
         zoom: 10
     });
-    
+
     var userLocation = new mapboxgl.GeolocateControl({
         positionOptions: {
             enableHighAccuracy: true
@@ -382,16 +386,18 @@ function umkmController($scope, $http, helperServices, message, umkmServices) {
         });
     });
 
-    $scope.showMap = () => {
-        $("#addLatLong").modal('show');
-        setTimeout(() => {
-            map.resize();
-        }, 300);
+    $scope.setDirection = () => {
+        if($scope.cekdirection){
+            map.addControl(directions, 'top-left');
+        }else{
+            map.removeControl(directions);
+        }
     }
-    var geocoder = new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
-    });
+
+    // var geocoder = new MapboxGeocoder({
+    //     accessToken: mapboxgl.accessToken,
+    //     mapboxgl: mapboxgl
+    // });
     // document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
     umkmServices.get().then(res => {
         var geojson = {};
@@ -424,15 +430,15 @@ function umkmController($scope, $http, helperServices, message, umkmServices) {
             // create a HTML element for each feature
             var el = document.createElement('div');
             el.className = 'marker';
-            
+
 
             // make a marker for each feature and add it to the map
-            var a = new mapboxgl.Marker({html: "Test"})
+            var a = new mapboxgl.Marker({ html: "Test" })
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups
                         .setHTML(
-                            '<img src="' + foto + '" width="100%">' + 
+                            '<img src="' + foto + '" width="100%">' +
                             '<h3>' +
                             marker.properties.title +
                             '</h3><p>' +
@@ -441,7 +447,7 @@ function umkmController($scope, $http, helperServices, message, umkmServices) {
                         )
                 )
                 .addTo(map);
-                // a.setHTML('<h5>' + marker.properties.title + '</h5>');
+            // a.setHTML('<h5>' + marker.properties.title + '</h5>');
         });
         // var marker = new mapboxgl.Marker({
         //     color: "maroon",

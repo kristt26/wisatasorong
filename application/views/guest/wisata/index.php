@@ -7,12 +7,12 @@
                 </div>
             </div> <!-- end of row -->
         </div>
-        <div class="col-sm-12" style="height: 500px; padding: 0px !important;">
-            <div style="position: relative; width:100%; height: 500px;">
+        <div class="col-sm-12" style="height: 600px; padding: 0px !important;">
+            <div style="position: relative; width:100%; height: 600px;">
                 <div id="mapp"></div>
                 <div class="mapboxgl-ctrl-top-right" style="top: 32px;">
                     <div class="mapboxgl-ctrl  mapboxgl-ctrl-group">
-                        <input type="checkbox" class="mapboxgl-ctrl-geolocate" style="margin: 8px;">
+                        <input type="checkbox" class="mapboxgl-ctrl-geolocate" style="margin: 8px;" ng-model="cekdirection" ng-change="setDirection()">
                     </div>
                 </div>
             </div>
