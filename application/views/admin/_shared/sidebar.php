@@ -15,7 +15,7 @@
           </div> -->
           <div class="info">
             <h5 style="color:#fff"><?=$this->session->userdata('nama');?></h5>
-            <a href="#" class="d-block"><?=$this->session->userdata('role');?></a>
+            <a href="#" class="d-block"><?=$this->session->userdata('role');?> </a>
           </div>
         </div>
 
