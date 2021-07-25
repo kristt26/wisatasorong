@@ -5,13 +5,17 @@ class authentication extends CI_Controller {
     
     public function __construct()
     {
+
         parent::__construct();
         $this->load->model('Auth_model', 'Auth');
+        $this->load->library('MyLib');
+        
         
     }
     
     public function index()
     {
+        
         $this->Auth->check();
         $this->load->view('auth');
     }
@@ -22,6 +26,13 @@ class authentication extends CI_Controller {
         if ($result) {
             $result['is_login'] = true;
             $this->session->set_userdata($result);
+            $item = [
+                "tanggal" => date("Y-m-d"),
+                'ip'=>$this->mylib->get_client_ip()
+            ];
+            if($result['role'] != "Admin"){
+                $this->Auth->counter($item);
+            }
             echo json_encode($result);
         } else {
             $this->session->set_flashdata('pesan', 'Username tidak ditemukan!!!');

@@ -13,7 +13,10 @@
 <body ng-controller="userLogin">
     <?php
     if ($this->session->userdata('is_login')) {
-        redirect('welcome');
+        if($this->session->userdata('role')=="Admin")
+            redirect('admin/home');
+        else
+            redirect('welcome');
     }
     ?>
     <div class="login-page">

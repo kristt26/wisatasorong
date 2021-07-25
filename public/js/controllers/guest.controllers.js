@@ -90,13 +90,13 @@ function homeController($scope, $http, helperServices) {
     // }, {})
 }
 
-function wisataController($scope, $http, helperServices, wisataServices) {
-    $scope.datas = [];
-    wisataServices.get().then(res => {
-        $scope.datas = res;
-    })
+// function wisataController($scope, $http, helperServices, wisataServices) {
+//     $scope.datas = [];
+//     wisataServices.get().then(res => {
+//         $scope.datas = res;
+//     })
 
-}
+// }
 
 function wisataController($scope, $http, helperServices, message, wisataServices) {
     $scope.model = {};
@@ -235,7 +235,9 @@ function wisataController($scope, $http, helperServices, message, wisataServices
                 properties: {
                     title: element.nama,
                     img: element.foto,
-                    address: element.alamat
+                    address: element.alamat,
+                    kategori: element.kategori,
+                    warna: element.warna
                     // description: '1714 14th St NW, Washington DC',
                     // image: 'https://farm9.staticflickr.com/8604/15769066303_3e4dcce464_n.jpg',
                     // icon: {
@@ -257,7 +259,7 @@ function wisataController($scope, $http, helperServices, message, wisataServices
 
 
             // make a marker for each feature and add it to the map
-            var a = new mapboxgl.Marker({ html: "Test" })
+            var a = new mapboxgl.Marker({ "color": marker.properties.warna })
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -433,7 +435,7 @@ function umkmController($scope, $http, helperServices, message, umkmServices) {
 
 
             // make a marker for each feature and add it to the map
-            var a = new mapboxgl.Marker({ html: "Test" })
+            var a = new mapboxgl.Marker({ "color": "#b40219" })
                 .setLngLat(marker.geometry.coordinates)
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups

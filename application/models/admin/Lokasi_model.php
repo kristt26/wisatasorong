@@ -7,18 +7,41 @@ class Lokasi_model extends CI_Model
 
     public function get($type)
     {
-        if(is_null($type)){
+        if (is_null($type)) {
             return $this->db->query("SELECT
                 `lokasi`.*,
                 (SELECT file FROM foto WHERE foto.lokasiid=lokasi.id AND status=1) AS foto
             FROM
                 `lokasi`")->result_array();
-        }else{
-            return $this->db->query("SELECT
+        } else {
+            if ($type == "Wisata") {
+                return $this->db->query("SELECT
+                `lokasi`.`id`,
+                `lokasi`.`type`,
+                `lokasi`.`nama`,
+                `lokasi`.`alamat`,
+                `lokasi`.`latitude`,
+                `lokasi`.`longitude`,
+                `lokasi`.`kecamatanid`,
+                `lokasi`.`kelurahanid`,
+                `lokasi`.`userid`,
+                `lokasi`.`deskripsi`,
+                `lokasi`.`kategoriid`,
+                `kategori`.`nama` AS `kategori`,
+                `kategori`.`warna`,
+                (SELECT `foto`.`file` FROM `foto` WHERE `foto`.`lokasiid` = `lokasi`.`id` AND `foto`.`status` = 1) AS `foto`
+              FROM
+                `lokasi`
+                LEFT JOIN `kategori` ON `kategori`.`id` = `lokasi`.`kategoriid`
+              WHERE
+                `lokasi`.`type` = '$type'")->result_array();
+            } else {
+                return $this->db->query("SELECT
                 `lokasi`.*,
                 (SELECT file FROM foto WHERE foto.lokasiid=lokasi.id AND status=1) AS foto
             FROM
                 `lokasi` WHERE lokasi.type = '$type'")->result_array();
+            }
         }
     }
 
@@ -35,17 +58,32 @@ class Lokasi_model extends CI_Model
     {
         $this->load->library('MyLib');
         $this->db->trans_begin();
-        $item = [
-            'nama' => $data['nama'],
-            'alamat' => $data['alamat'],
-            'latitude' => $data['latitude'],
-            'longitude' => $data['longitude'],
-            'kecamatanid' => $data['kecamatanid'],
-            'kelurahanid' => $data['kelurahanid'],
-            'userid' => $this->session->userdata('id'),
-            'type' => $data['type'],
-            'deskripsi' => $data['deskripsi']
-        ];
+        if (isset($data['kategoriid'])) {
+            $item = [
+                'nama' => $data['nama'],
+                'alamat' => $data['alamat'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'kecamatanid' => $data['kecamatanid'],
+                'kelurahanid' => $data['kelurahanid'],
+                'userid' => $this->session->userdata('id'),
+                'type' => $data['type'],
+                'deskripsi' => $data['deskripsi'],
+                'kategoriid' => $data['kategoriid']
+            ];
+        } else {
+            $item = [
+                'nama' => $data['nama'],
+                'alamat' => $data['alamat'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'kecamatanid' => $data['kecamatanid'],
+                'kelurahanid' => $data['kelurahanid'],
+                'userid' => $this->session->userdata('id'),
+                'type' => $data['type'],
+                'deskripsi' => $data['deskripsi'],
+            ];
+        }
         $this->db->insert('lokasi', $item);
         $lokasiid = $this->db->insert_id();
         $item = [
@@ -63,29 +101,45 @@ class Lokasi_model extends CI_Model
         }
     }
 
-    public function put($data){
+    public function put($data)
+    {
         $this->load->library('MyLib');
         $this->db->trans_begin();
-        $item = [
-            'nama' => $data['nama'],
-            'alamat' => $data['alamat'],
-            'latitude' => $data['latitude'],
-            'longitude' => $data['longitude'],
-            'kecamatanid' => $data['kecamatanid'],
-            'kelurahanid' => $data['kelurahanid'],
-            'userid' => $this->session->userdata('id'),
-            'type' => $data['type'],
-            'deskripsi' => $data['deskripsi']
-        ];
-        $this->db->update('lokasi', $item, ['id'=>$data['id']]);
+        if (isset($data['kategoriid'])) {
+            $item = [
+                'nama' => $data['nama'],
+                'alamat' => $data['alamat'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'kecamatanid' => $data['kecamatanid'],
+                'kelurahanid' => $data['kelurahanid'],
+                'userid' => $this->session->userdata('id'),
+                'type' => $data['type'],
+                'deskripsi' => $data['deskripsi'],
+                'deskripsi' => $data['deskripsi']
+            ];
+        } else {
+            $item = [
+                'nama' => $data['nama'],
+                'alamat' => $data['alamat'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'kecamatanid' => $data['kecamatanid'],
+                'kelurahanid' => $data['kelurahanid'],
+                'userid' => $this->session->userdata('id'),
+                'type' => $data['type'],
+                'deskripsi' => $data['deskripsi']
+            ];
+        }
+        $this->db->update('lokasi', $item, ['id' => $data['id']]);
         $lokasiid = $this->db->insert_id();
-        if(!is_null($data['file'])){
+        if (!is_null($data['file'])) {
             $item = [
                 'file' => isset($data['file']['base64']) ? $this->mylib->decodebase64($data['file']['base64'], 'galeri') : "",
                 'lokasiid' => $lokasiid,
                 'status' => 1,
             ];
-            $this->db->delete('foto', ['lokasiid'=>$data['id'], 'status'=>1]);
+            $this->db->delete('foto', ['lokasiid' => $data['id'], 'status' => 1]);
             $this->db->insert('foto', $item);
         }
         if ($this->db->trans_status()) {
@@ -96,7 +150,6 @@ class Lokasi_model extends CI_Model
             return false;
         }
     }
-
 }
 
 /* End of file Wisata_model.php */

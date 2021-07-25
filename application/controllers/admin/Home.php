@@ -7,14 +7,15 @@ class Home extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Auth_model');
         
     }
     
 
     public function index()
     {
-        $content['content'] = $this->load->view('admin/home/index', '', TRUE);
-        
+        $data = $this->Auth_model->getcounter();
+        $content['content'] = $this->load->view('admin/home/index', $data, TRUE);
         $this->load->view('admin/_shared/layout', $content);
     }
 

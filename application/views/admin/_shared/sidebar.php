@@ -25,14 +25,14 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-item">
-              <a href="<?=base_url('admin/home')?>" ng-class="{'nav-link active': header=='Home', 'nav-link': header!='Home'}">
+              <a href="<?=base_url('admin/home')?>" ng-class="{'nav-link active': title=='Home', 'nav-link': title!='Home'}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                   Home
                 </p>
               </a>
             </li>
-            <li ng-class="{'nav-item menu-open': header=='Laporan', 'nav-item': header!='Laporan'}">
+            <li ng-class="{'nav-item menu-open': title=='Kategori' || title=='Wilayah' || title=='User', 'nav-item': title!='Kategori' || title!='Wilayah' || title!='User'}">
               <a href="javascript:void()" ng-class="{'nav-link active': header=='Laporan', 'nav-link': header!='Laporan'}">
                 <i class="nav-icon fas fa-file"></i>
                 <p>
@@ -42,21 +42,27 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="<?=base_url('admin/users')?>" ng-class="{'nav-link active': title=='Laporan Tempat Usaha', 'nav-link': title!='Laporan Tempat Usaha'}">
+                  <a href="<?=base_url('admin/users')?>" ng-class="{'nav-link active': title=='User', 'nav-link': title!='User'}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>User</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="<?=base_url('admin/wilayah')?>" ng-class="{'nav-link active': title=='Laporan Rekapitulasi', 'nav-link': title!='Laporan Rekapitulasi'}">
+                  <a href="<?=base_url('admin/wilayah')?>" ng-class="{'nav-link active': title=='Wilayah', 'nav-link': title!='Wilayah'}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Kecamatan</p>
+                    <p>Wilayah</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<?=base_url('admin/kategori')?>" ng-class="{'nav-link active': title=='Kategori', 'nav-link': title!='Kategori'}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Kategori</p>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <a href="<?=base_url('admin/wisata')?>" ng-class="{'nav-link active': header=='Petugas', 'nav-link': header!='Petugas'}">
+              <a href="<?=base_url('admin/wisata')?>" ng-class="{'nav-link active': header=='Wisata', 'nav-link': header!='Wisata'}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                   Wisata
@@ -64,7 +70,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?=base_url('admin/umkm')?>" ng-class="{'nav-link active': header=='Jenis Usaha', 'nav-link': header!='Jenis Usaha'}">
+              <a href="<?=base_url('admin/umkm')?>" ng-class="{'nav-link active': header=='UMKM', 'nav-link': header!='UMKM'}">
                 <i class="nav-icon fas fa-registered"></i>
                 <p>
                   UMKM

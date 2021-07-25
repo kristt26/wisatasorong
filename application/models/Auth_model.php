@@ -54,6 +54,21 @@ class Auth_model extends CI_Model {
             }
         }
     }
+
+    public function counter($data)
+    {
+        $this->db->insert('counter', $data);
+    }
+
+    public function getcounter()
+    {
+        return $this->db->query("SELECT
+            (SELECT COUNT(*) FROM lokasi WHERE type='Wisata') AS `Wisata`,
+            (SELECT COUNT(*) FROM lokasi WHERE type='UMKM') AS `UMKM`,
+            (SELECT COUNT(*) FROM users) AS `user`,
+            (SELECT COUNT(*) FROM counter WHERE tanggal = '2021-07-25') AS counthari,
+            (SELECT COUNT(*) FROM counter ) AS counttotal")->row_array();
+    }
 }
 
 /* End of file Auth_model.php */

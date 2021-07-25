@@ -8,8 +8,18 @@ angular.module('apps', [
     'message.service'
 
 ])
-.controller('indexController', indexController);
+    .controller('indexController', indexController);
 
-function indexController() {
-    
+function indexController($scope) {
+    $scope.titleHeader = "Indihome Sistem";
+    $scope.header = "";
+    $scope.breadcrumb = "";
+    $scope.title;
+    $scope.$on("SendUp", function (evt, data) {
+        $scope.header = data;
+        $scope.header = data;
+        $scope.breadcrumb = data;
+        $scope.title = data;
+        $.LoadingOverlay("hide");
+    });
 }

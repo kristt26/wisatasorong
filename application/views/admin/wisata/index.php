@@ -15,6 +15,7 @@
                          <thead>
                              <tr>
                                  <th>No</th>
+                                 <th>Kategori</th>
                                  <th>Wisata</th>
                                  <th>Lat</th>
                                  <th>Long</th>
@@ -23,8 +24,9 @@
                              </tr>
                          </thead>
                          <tbody>
-                             <tr ng-repeat="item in datas">
+                             <tr ng-repeat="item in datas | orderBy: item.kategori">
                                  <td>{{$index+1}}</td>
+                                 <td>{{item.kategori}}</td>
                                  <td>{{item.nama}}</td>
                                  <td>{{item.latitude}}</td>
                                  <td>{{item.longitude}}</td>

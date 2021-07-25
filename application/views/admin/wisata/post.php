@@ -43,6 +43,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
+                            <div class="col-sm-10">
+                                <select id="kategori" class="form-control"
+                                    ng-options="item as item.nama for item in kategoris" ng-model="kategori"
+                                    ng-click="model.kategoriid = kategori.id" required></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="kecamatan" class="col-sm-2 col-form-label">Kecamatan</label>
                             <div class="col-sm-10">
                                 <select id="kecamatan" class="form-control"
