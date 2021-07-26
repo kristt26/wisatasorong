@@ -30,9 +30,9 @@
                                  <td>{{item.longitude}}</td>
                                  <td>{{item.alamat}}</td>
                                  <td class="d-flex justify-content-center">
-                                     <button class="btn btn-info btn-sm"
+                                     <!-- <button class="btn btn-info btn-sm"
                                          ng-click="setKelurahan(item.kelurahans, item.id)"><i
-                                             class="fa fa-list"></i></button>
+                                             class="fa fa-list"></i></button> -->
                                      <a href="<?=base_url('admin/umkm/tambah?id={{item.id}}')?>" class="btn btn-warning btn-sm ml-1" ng-click="edit(item, 'kecamatan')"><i
                                              class="fa fa-edit"></i></a>
                                      <a href="<?=base_url('admin/galery/index?id={{item.id}}')?>" class="btn btn-primary btn-sm ml-1" ng-click="edit(item, 'kecamatan')"><i

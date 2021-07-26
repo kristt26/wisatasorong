@@ -11,14 +11,16 @@ class Welcome extends CI_Controller
         $this->load->model('admin/Galery_model', 'galery');
         $this->load->library('MyLib');
     }
-    
+
     public function index()
     {
+        $this->load->model('Auth_model');
         // $this->mylib->counter(base_url('public/guest/counter.txt'));
-        $data=[
-            'wisatas'=> $this->lokasi->get('Wisata'),
-            'umkms'=> $this->lokasi->get('UMKM'),
-            'galery' => $this->galery->getAll()
+        $data = [
+            'wisatas' => $this->lokasi->get('Wisata'),
+            'umkms' => $this->lokasi->get('UMKM'),
+            'galery' => $this->galery->getAll(),
+            'counter' => $this->Auth_model->getcounter(),
         ];
         $this->load->view('guest/_shared/layout', $data);
     }

@@ -89,7 +89,7 @@ if (!$this->session->userdata('is_login')) {
                     <a class="nav-link page-scroll" href="#about">ABOUT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="<?= base_url(!$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout') ?>"> <?= !$this->session->userdata('is_login') ? 'LOGIN': 'LOGOUT'?></a>
+                    <a class="nav-link page-scroll" href="<?=base_url(!$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout')?>"> <?=!$this->session->userdata('is_login') ? 'LOGIN' : 'LOGOUT'?></a>
                 </li>
             </ul>
             <!-- <span class="nav-item social-icons">
@@ -184,10 +184,10 @@ if (!$this->session->userdata('is_login')) {
                 <div class="col-lg-12">
 
                     <!-- Card -->
-                    <?php for ($i=0; $i < (count($wisatas) > 3 ? 3 : count($wisatas)) ; $i++):?>
+                    <?php for ($i = 0; $i < (count($wisatas) > 3 ? 3 : count($wisatas)); $i++): ?>
                     <div class="card">
                         <div class="card-image">
-                            <img class="img-fluid" src="<?=base_url('public/img/galeri/').$wisatas[$i]['foto']?>"
+                            <img class="img-fluid" src="<?=base_url('public/img/galeri/') . $wisatas[$i]['foto']?>"
                                 alt="alternative">
                         </div>
                         <div class="card-body">
@@ -206,7 +206,7 @@ if (!$this->session->userdata('is_login')) {
                             <p class="price">Starting at <span>$199</span></p> -->
                         </div>
                         <div class="button-container">
-                            <a class="btn-solid-reg page-scroll" href="<?= base_url('wisata/detail/').$wisatas[$i]['id']?>">DETAILS</a>
+                            <a class="btn-solid-reg page-scroll" href="<?=base_url('wisata/detail/') . $wisatas[$i]['id']?>">DETAILS</a>
                         </div>
                     </div>
                     <?php endfor;?>
@@ -229,10 +229,10 @@ if (!$this->session->userdata('is_login')) {
                 <div class="col-lg-12">
 
                     <!-- Card -->
-                    <?php for ($i=0; $i < (count($umkms) > 3 ? 3 : count($umkms)) ; $i++):?>
+                    <?php for ($i = 0; $i < (count($umkms) > 3 ? 3 : count($umkms)); $i++): ?>
                     <div class="card">
                         <div class="card-image">
-                            <img class="img-fluid" src="<?=base_url('public/img/galeri/').$umkms[$i]['foto']?>"
+                            <img class="img-fluid" src="<?=base_url('public/img/galeri/') . $umkms[$i]['foto']?>"
                                 alt="alternative">
                         </div>
                         <div class="card-body">
@@ -251,7 +251,7 @@ if (!$this->session->userdata('is_login')) {
                             <p class="price">Starting at <span>$199</span></p> -->
                         </div>
                         <div class="button-container">
-                            <a class="btn-solid-reg page-scroll" href="<?= base_url('umkm/detail/').$umkms[$i]['id']?>">DETAILS</a>
+                            <a class="btn-solid-reg page-scroll" href="<?=base_url('umkm/detail/') . $umkms[$i]['id']?>">DETAILS</a>
                         </div>
                     </div>
                     <?php endfor;?>
@@ -363,7 +363,7 @@ if (!$this->session->userdata('is_login')) {
 
 
     <!-- Call Me -->
-    
+
 
     <div id="galery" class="filter">
         <div class="container">
@@ -383,11 +383,11 @@ if (!$this->session->userdata('is_login')) {
                     </div>
                     <!-- end of button group -->
                     <div class="grid">
-                        <?php foreach ($galery as $key => $value):?>
-                        <div class="element-item <?= $value['type']?>">
-                            <a class="popup-with-move-anim" href="#foto-<?= $value['id']?>">
-                                <div class="element-item-overlay"><span><?= $value['nama']?></span></div><img
-                                    src="<?=base_url('public/img/galeri/').$value['file']?>" alt="<?= $value['nama']?>" style="width: 100%; height: 100%;">
+                        <?php foreach ($galery as $key => $value): ?>
+                        <div class="element-item <?=$value['type']?>">
+                            <a class="popup-with-move-anim" href="#foto-<?=$value['id']?>">
+                                <div class="element-item-overlay"><span><?=$value['nama']?></span></div><img
+                                    src="<?=base_url('public/img/galeri/') . $value['file']?>" alt="<?=$value['nama']?>" style="width: 100%; height: 100%;">
                             </a>
                         </div>
                         <?php endforeach;?>
@@ -444,12 +444,12 @@ if (!$this->session->userdata('is_login')) {
 
     <!-- Project Lightboxes -->
     <!-- Lightbox -->
-    <?php foreach ($galery as $key => $value):?>
-    <div id="foto-<?= $value['id']?>" class="lightbox-basic zoom-anim-dialog mfp-hide">
+    <?php foreach ($galery as $key => $value): ?>
+    <div id="foto-<?=$value['id']?>" class="lightbox-basic zoom-anim-dialog mfp-hide">
         <div class="row">
             <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
             <div class="col-lg-12">
-                <img class="img-fluid" src="<?=base_url('public/img/galeri/').$value['file']?>" alt="alternative">
+                <img class="img-fluid" src="<?=base_url('public/img/galeri/') . $value['file']?>" alt="alternative">
             </div>
         </div>
     </div>
@@ -462,7 +462,7 @@ if (!$this->session->userdata('is_login')) {
             <div class="row">
                 <div class="col-lg-5 col-xl-6">
                     <div class="image-container">
-                        <img class="img-fluid" src="<?=base_url('public/img/galeri/').$wisatas[0]['foto']?>" alt="alternative">
+                        <img class="img-fluid" src="<?=base_url('public/img/galeri/') . $wisatas[0]['foto']?>" alt="alternative">
                     </div>
                 </div>
                 <div class="col-lg-7 col-xl-6">
@@ -471,16 +471,16 @@ if (!$this->session->userdata('is_login')) {
                         <p>Website ini diperuntukkan untuk para pencinta alam yang ingin mencari informasi mengenai objeck wisata yang berapada di kota sorong</p>
                         <div id="counter">
                             <div class="cell">
-                                <div class="counter-value number-count" data-count="231">1</div>
+                                <div class="counter-value number-count" data-count="<?=$counter['user']?>">1</div>
                                 <div class="counter-info">Users</div>
                             </div>
                             <div class="cell">
-                                <div class="counter-value number-count" data-count="121">1</div>
+                                <div class="counter-value number-count" data-count="<?=$counter['counthari']?>">1</div>
                                 <div class="counter-info">Login</div>
                             </div>
                             <div class="cell">
-                                <div class="counter-value number-count" data-count="159">1</div>
-                                <div class="counter-info">Hits</div>
+                                <div class="counter-value number-count" data-count="<?=$counter['counttotal']?>">1</div>
+                                <div class="counter-info">Total</div>
                             </div>
                         </div>
 
@@ -489,7 +489,7 @@ if (!$this->session->userdata('is_login')) {
             </div>
         </div>
     </div>
-    
+
     <!-- Contact -->
     <!-- <div id="contact" class="form-2">
         <div class="container">
@@ -578,7 +578,7 @@ if (!$this->session->userdata('is_login')) {
                             <div id="cmsgSubmit" class="h3 text-center hidden"></div>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
@@ -646,7 +646,7 @@ if (!$this->session->userdata('is_login')) {
             </div>
         </div>
     </div> -->
-    
+
 
 
     <!-- Copyright -->

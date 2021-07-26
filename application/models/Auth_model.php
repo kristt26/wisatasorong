@@ -1,7 +1,8 @@
-<?php 
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth_model extends CI_Model {
+class Auth_model extends CI_Model
+{
     public function login($data)
     {
         // $this->load->library('mylib');
@@ -19,9 +20,9 @@ class Auth_model extends CI_Model {
             LEFT JOIN `usersinroles` ON `usersinroles`.`usersid` = `users`.`id`
             LEFT JOIN `roles` ON `usersinroles`.`rolesid` = `roles`.`id`
         WHERE users.email = '$username' OR users.username = '$username'")->row_array();
-        if(is_null($item)){
+        if (is_null($item)) {
             return false;
-        }else{
+        } else {
             if (password_verify($password, $item['password'])) {
                 return $item;
             } else {
@@ -40,7 +41,7 @@ class Auth_model extends CI_Model {
                 if ($role['role'] == 'Admin') {
                     $this->db->insert('roles', $role);
                     $role['id'] = $this->db->insert_id();
-                    $this->db->insert('users', ['nama'=>'Administrator','username' => 'Administrator', 'password' => password_hash('Admin123', PASSWORD_DEFAULT), 'email'=>'administrator@mail.com']);
+                    $this->db->insert('users', ['nama' => 'Administrator', 'username' => 'Administrator', 'password' => password_hash('Admin123', PASSWORD_DEFAULT), 'email' => 'administrator@mail.com']);
                     $userid = $this->db->insert_id();
                     $this->db->insert('usersinroles', ['rolesid' => $role['id'], 'usersid' => $userid]);
                 } else {
@@ -62,11 +63,12 @@ class Auth_model extends CI_Model {
 
     public function getcounter()
     {
+        $tanggal = date("Y-m-d");
         return $this->db->query("SELECT
             (SELECT COUNT(*) FROM lokasi WHERE type='Wisata') AS `Wisata`,
             (SELECT COUNT(*) FROM lokasi WHERE type='UMKM') AS `UMKM`,
             (SELECT COUNT(*) FROM users) AS `user`,
-            (SELECT COUNT(*) FROM counter WHERE tanggal = '2021-07-25') AS counthari,
+            (SELECT COUNT(*) FROM counter WHERE tanggal = '$tanggal') AS counthari,
             (SELECT COUNT(*) FROM counter ) AS counttotal")->row_array();
     }
 }
