@@ -1,19 +1,19 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Umkm extends CI_Controller {
-    
+class Umkm extends CI_Controller
+{
+
     public function __construct()
     {
         parent::__construct();
         $this->load->model('admin/Lokasi_model', 'lokasi');
     }
-    
 
     public function index()
     {
-        $content['content'] = $this->load->view('admin/umkm/index', '', TRUE);
+        $content['content'] = $this->load->view('admin/umkm/index', '', true);
         $this->load->view('admin/_shared/layout', $content);
     }
 
@@ -25,24 +25,26 @@ class Umkm extends CI_Controller {
 
     public function tambah()
     {
-        $content['content'] = $this->load->view('admin/umkm/post', '', TRUE);
+        $content['content'] = $this->load->view('admin/umkm/post', '', true);
         $this->load->view('admin/_shared/layout', $content);
     }
 
     public function post()
     {
-        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $data = $data = json_decode($this->input->raw_input_stream, true);
         $result = $this->lokasi->post($data);
-        if($result)
+        if ($result) {
             echo json_encode(true);
-        else
+        } else {
             http_response_code(400);
-            echo json_encode(false);
+        }
+
+        echo json_encode(false);
     }
 
     public function put()
     {
-        $data = $data = json_decode($this->security->xss_clean($this->input->raw_input_stream), true);
+        $data = $data = json_decode($this->input->raw_input_stream, true);
         $result = $this->lokasi->put($data);
         echo json_encode($result);
     }
