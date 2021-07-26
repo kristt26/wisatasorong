@@ -253,11 +253,20 @@ $this->load->view('admin/_shared/sidebar');
     <script src="https://unpkg.com/@esri/arcgis-rest-auth@3.0.0/dist/umd/auth.umd.js"></script>
     <script src="<?=base_url()?>public/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
     <script src="<?=base_url()?>public/plugins/filterizr/jquery.filterizr.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/rv9fpjih10cz06opokn2wzy9zina5xksqeku4a1vitllucut/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
     $(function() {
         //Initialize Select2 Elements
         $('[data-toggle="tooltip"]').tooltip()
         $('.select2').select2();
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+        });
 
 
 

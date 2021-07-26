@@ -141,6 +141,7 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
                         $scope.kelurahan = $scope.kecamatan.kelurahans.find(x => x.id == res.kelurahanid);
                         $scope.model = res;
                         $scope.kategori = $scope.kategoris.find(x => x.id == res.kategoriid);
+                        tinymce.get("deskripsi").setContent(res.deskripsi);
                         console.log($scope.model);
                     })
                     $.LoadingOverlay("hide");
@@ -152,6 +153,7 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
     })
     $scope.save = (item) => {
         item.type = "Wisata";
+        item.deskripsi = tinymce.get("deskripsi").getContent();
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
             if (item.id) {
                 wisataServices.put(item).then(x => {
@@ -286,6 +288,7 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
                     $scope.kecamatan = $scope.kecamatans.find(x => x.id == res.kecamatanid);
                     $scope.kelurahan = $scope.kecamatan.kelurahans.find(x => x.id == res.kelurahanid);
                     $scope.model = res;
+                    tinymce.get("deskripsi").setContent(res.deskripsi);
                     console.log($scope.model);
                 })
             })
@@ -293,6 +296,7 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
     })
     $scope.save = (item) => {
         item.type = "UMKM";
+        item.deskripsi = tinymce.get("deskripsi").getContent();
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
             if (item.id) {
                 umkmServices.put(item).then(x => {
