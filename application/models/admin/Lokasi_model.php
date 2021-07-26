@@ -69,7 +69,7 @@ class Lokasi_model extends CI_Model
                 'userid' => $this->session->userdata('id'),
                 'type' => $data['type'],
                 'deskripsi' => $data['deskripsi'],
-                'kategoriid' => $data['kategoriid']
+                'kategoriid' => $data['kategoriid'],
             ];
         } else {
             $item = [
@@ -116,7 +116,7 @@ class Lokasi_model extends CI_Model
                 'userid' => $this->session->userdata('id'),
                 'type' => $data['type'],
                 'deskripsi' => $data['deskripsi'],
-                'deskripsi' => $data['deskripsi']
+                'kategoriid' => $data['kategoriid'],
             ];
         } else {
             $item = [
@@ -128,7 +128,7 @@ class Lokasi_model extends CI_Model
                 'kelurahanid' => $data['kelurahanid'],
                 'userid' => $this->session->userdata('id'),
                 'type' => $data['type'],
-                'deskripsi' => $data['deskripsi']
+                'deskripsi' => $data['deskripsi'],
             ];
         }
         $this->db->update('lokasi', $item, ['id' => $data['id']]);

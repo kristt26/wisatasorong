@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Display driving directions</title>
+    <title>Dinas Pariwisata Sorong</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="<?=base_url('public/js/boxmap/dist/mapbox-gl-directions.css')?>" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext"
@@ -118,7 +118,7 @@ if (!$this->session->userdata('is_login')) {
                     <a class="nav-link page-scroll" href="<?=base_url('umkm')?>">UMKM</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link page-scroll" href="<?= base_url(!$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout') ?>"> <?= !$this->session->userdata('is_login') ? 'LOGIN': 'LOGOUT'?></a>
+                <a class="nav-link page-scroll" href="<?=base_url(!$this->session->userdata('is_login') ? 'authentication' : 'authentication/logout')?>"> <?=!$this->session->userdata('is_login') ? 'LOGIN' : 'LOGOUT'?></a>
                 </li>
             </ul>
         </div>
@@ -146,7 +146,7 @@ if (!$this->session->userdata('is_login')) {
 
     <!-- </div> -->
     <div style="background-color: #f4f6f9;">
-        <?= $content?>
+        <?=$content?>
     </div>
 
     <!-- Copyright -->

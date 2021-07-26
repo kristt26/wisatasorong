@@ -37,7 +37,7 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
     $scope.kategoris = [];
     $scope.kategori = {};
     var url = new URLSearchParams(window.location.search);
-    
+
     const apiKey = "AAPKe04c23b9e1e14827a485e3c06a91369a44TROFRCnx1O_wzKtYcV81b7ApPKaBQwXH064LgF6Y-BxD_3-5yyVhpmIrVi1V19";
 
     const basemapEnum = "ArcGIS:Navigation";
@@ -84,7 +84,7 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
             });
     })
 
-    map.on('load', function () {
+    map.on('load', function() {
         map.addSource('maine', {
             'type': 'geojson',
             'data': helperServices.url + 'public/js/sorong.geojson'
@@ -130,34 +130,36 @@ function tambahWisataController($scope, $http, helperServices, wilayahServices, 
             element.kelurahans = res.kelurahans.filter(x => x.kecamatanid == element.id);
         });
         $scope.kecamatans = res.kecamatans;
-        kategoriServices.get().then(kategori=>{
+        kategoriServices.get().then(kategori => {
             $scope.kategoris = kategori;
-            if(url.get('id')){
-                wisataServices.getId(url.get('id')).then(res=>{
+            if (url.get('id')) {
+                wisataServices.getId(url.get('id')).then(res => {
                     $scope.$applyAsync(() => {
                         res.latitude = parseFloat(res.latitude);
                         res.longitude = parseFloat(res.longitude);
-                        $scope.kecamatan = $scope.kecamatans.find(x=>x.id == res.kecamatanid);
-                        $scope.kelurahan = $scope.kecamatan.kelurahans.find(x=>x.id == res.kelurahanid);
+                        $scope.kecamatan = $scope.kecamatans.find(x => x.id == res.kecamatanid);
+                        $scope.kelurahan = $scope.kecamatan.kelurahans.find(x => x.id == res.kelurahanid);
                         $scope.model = res;
-                        $scope.kategori = $scope.kategoris.find(x=>x.id == res.kategoriid);
+                        $scope.kategori = $scope.kategoris.find(x => x.id == res.kategoriid);
                         console.log($scope.model);
                     })
                     $.LoadingOverlay("hide");
                 })
+            } else {
+                $.LoadingOverlay("hide");
             }
         });
     })
     $scope.save = (item) => {
         item.type = "Wisata";
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
-            if(item.id){
+            if (item.id) {
                 wisataServices.put(item).then(x => {
                     message.confirm("Berhasil Menyimpan Data", true).then(x => {
                         document.location.href = helperServices.url + "admin/wisata";
                     });
                 })
-            }else{
+            } else {
                 wisataServices.post(item).then(x => {
                     message.confirm("Berhasil Mengubah Data", true).then(x => {
                         document.location.href = helperServices.url + "admin/wisata";
@@ -231,7 +233,7 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
             });
     })
 
-    map.on('load', function () {
+    map.on('load', function() {
         map.addSource('maine', {
             'type': 'geojson',
             'data': helperServices.url + 'public/js/sorong.geojson'
@@ -276,13 +278,13 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
             element.kelurahans = res.kelurahans.filter(x => x.kecamatanid == element.id);
         });
         $scope.kecamatans = res.kecamatans;
-        if(url.get('id')){
-            wisataServices.getId(url.get('id')).then(res=>{
+        if (url.get('id')) {
+            wisataServices.getId(url.get('id')).then(res => {
                 $scope.$applyAsync(() => {
                     res.latitude = parseFloat(res.latitude);
                     res.longitude = parseFloat(res.longitude);
-                    $scope.kecamatan = $scope.kecamatans.find(x=>x.id == res.kecamatanid);
-                    $scope.kelurahan = $scope.kecamatan.kelurahans.find(x=>x.id == res.kelurahanid);
+                    $scope.kecamatan = $scope.kecamatans.find(x => x.id == res.kecamatanid);
+                    $scope.kelurahan = $scope.kecamatan.kelurahans.find(x => x.id == res.kelurahanid);
                     $scope.model = res;
                     console.log($scope.model);
                 })
@@ -292,13 +294,13 @@ function tambahUmkmController($scope, $http, helperServices, wilayahServices, me
     $scope.save = (item) => {
         item.type = "UMKM";
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
-            if(item.id){
+            if (item.id) {
                 umkmServices.put(item).then(x => {
                     message.confirm("Berhasil Menyimpan Data", "Ok").then(x => {
                         document.location.href = helperServices.url + "admin/umkm";
                     });
                 })
-            }else{
+            } else {
                 umkmServices.post(item).then(x => {
                     message.confirm("Berhasil Menyimpan Data", "Ok").then(x => {
                         document.location.href = helperServices.url + "admin/umkm";
@@ -384,7 +386,7 @@ function wilayahController($scope, $http, helperServices, wilayahServices, messa
             $scope.model1 = angular.copy(item);
 
     }
-    $scope.clear = ()=>{
+    $scope.clear = () => {
         $scope.model = {};
         $scope.model1 = {};
         $scope.showKelurahan = false;
@@ -405,10 +407,10 @@ function galeryController($scope, $http, helperServices, galeryServices, message
         console.log(res);
     })
 
-    $scope.cekFile = (item)=>{
+    $scope.cekFile = (item) => {
         console.log(item);
     }
-    
+
     $scope.save = (item) => {
         item.lokasiid = $scope.datas.lokasi.id;
         message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
@@ -442,19 +444,19 @@ function kategoriController($scope, $http, helperServices, kategoriServices, mes
         $scope.datas = res;
         console.log(res);
     })
-    $scope.edit = (item)=>{
+    $scope.edit = (item) => {
         $scope.model = angular.copy(item);
     }
-    
+
     $scope.save = (item) => {
-        if($scope.model.id){
+        if ($scope.model.id) {
             message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
                 kategoriServices.put(item).then(res => {
                     $scope.model = {};
                     message.info("Proses Berhasil");
                 });
             })
-        }else{
+        } else {
             message.dialogmessage('Anda Yakin?', 'Ya', 'Tidak').then(x => {
                 kategoriServices.post(item).then(res => {
                     $scope.model = {};
