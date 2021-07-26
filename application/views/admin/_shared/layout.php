@@ -260,7 +260,7 @@ $this->load->view('admin/_shared/sidebar');
         $('[data-toggle="tooltip"]').tooltip()
         $('.select2').select2();
         tinymce.init({
-            selector: 'textarea',
+            selector: '#deskripsi',
             plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
             toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
             toolbar_mode: 'floating',
