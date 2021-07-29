@@ -104,6 +104,7 @@ class Lokasi_model extends CI_Model
     public function put($data)
     {
         $this->load->library('MyLib');
+        $this->load->helper("file");
         $this->db->trans_begin();
         if (isset($data['kategoriid'])) {
             $item = [
@@ -132,11 +133,11 @@ class Lokasi_model extends CI_Model
             ];
         }
         $this->db->update('lokasi', $item, ['id' => $data['id']]);
-        $lokasiid = $this->db->insert_id();
+        $foto = $this->db->get_where("foto", ['lokasiid' => $data['id'], 'status' => 1])->row_array();
         if (!is_null($data['file'])) {
             $item = [
                 'file' => isset($data['file']['base64']) ? $this->mylib->decodebase64($data['file']['base64'], 'galeri') : "",
-                'lokasiid' => $lokasiid,
+                'lokasiid' => $data['id'],
                 'status' => 1,
             ];
             $this->db->delete('foto', ['lokasiid' => $data['id'], 'status' => 1]);
@@ -144,6 +145,7 @@ class Lokasi_model extends CI_Model
         }
         if ($this->db->trans_status()) {
             $this->db->trans_commit();
+            unlink("public/img/galeri/".$foto['file']);
             return true;
         } else {
             $this->db->trans_rollback();
