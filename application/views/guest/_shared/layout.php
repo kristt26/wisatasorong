@@ -172,18 +172,16 @@ if (!$this->session->userdata('is_login')) {
 
 
     <!-- Services -->
-    <div id="wisata" class="cards-2">
+    <!-- <div id="wisata" class="cards-2">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">WISATA SORONG</div>
                     <h2>&nbsp;</h2>
                 </div>
-            </div> <!-- end of row -->
+            </div> 
             <div class="row">
                 <div class="col-lg-12">
-
-                    <!-- Card -->
                     <?php for ($i = 0; $i < (count($wisatas) > 3 ? 3 : count($wisatas)); $i++): ?>
                     <div class="card">
                         <div class="card-image">
@@ -192,18 +190,6 @@ if (!$this->session->userdata('is_login')) {
                         </div>
                         <div class="card-body">
                             <h3 class="card-title"><?=$wisatas[$i]['nama']?></h3>
-                            <!-- <p>Perfect for fresh ideas or young startups, this package will help get the business off the ground</p>
-                            <ul class="list-unstyled li-space-lg">
-                                <li class="media">
-                                    <i class="fas fa-square"></i>
-                                    <div class="media-body">Environment and competition</div>
-                                </li>
-                                <li class="media">
-                                    <i class="fas fa-square"></i>
-                                    <div class="media-body">Designing the marketing plan</div>
-                                </li>
-                            </ul>
-                            <p class="price">Starting at <span>$199</span></p> -->
                         </div>
                         <div class="button-container">
                             <a class="btn-solid-reg page-scroll" href="<?=base_url('wisata/detail/') . $wisatas[$i]['id']?>">DETAILS</a>
@@ -214,21 +200,20 @@ if (!$this->session->userdata('is_login')) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Details 1 -->
-    <div id="umkm" class="cards-3">
+    <!-- <div id="umkm" class="cards-3">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">UMKM KOTA SORONG</div>
                     <h2>&nbsp;</h2>
                 </div>
-            </div> <!-- end of row -->
+            </div> 
             <div class="row">
                 <div class="col-lg-12">
 
-                    <!-- Card -->
                     <?php for ($i = 0; $i < (count($umkms) > 3 ? 3 : count($umkms)); $i++): ?>
                     <div class="card">
                         <div class="card-image">
@@ -237,18 +222,6 @@ if (!$this->session->userdata('is_login')) {
                         </div>
                         <div class="card-body">
                             <h3 class="card-title"><?=$umkms[$i]['nama']?></h3>
-                            <!-- <p>Perfect for fresh ideas or young startups, this package will help get the business off the ground</p>
-                            <ul class="list-unstyled li-space-lg">
-                                <li class="media">
-                                    <i class="fas fa-square"></i>
-                                    <div class="media-body">Environment and competition</div>
-                                </li>
-                                <li class="media">
-                                    <i class="fas fa-square"></i>
-                                    <div class="media-body">Designing the marketing plan</div>
-                                </li>
-                            </ul>
-                            <p class="price">Starting at <span>$199</span></p> -->
                         </div>
                         <div class="button-container">
                             <a class="btn-solid-reg page-scroll" href="<?=base_url('umkm/detail/') . $umkms[$i]['id']?>">DETAILS</a>
@@ -259,7 +232,7 @@ if (!$this->session->userdata('is_login')) {
                 </div>
             </div>
         </div>
-    </div> <!-- end of accordion -->
+    </div> -->
     <!-- end of details 1 -->
 
     <!-- Testimonials -->
@@ -468,6 +441,9 @@ if (!$this->session->userdata('is_login')) {
                 <div class="col-lg-7 col-xl-6">
                     <div class="text-container">
                         <div class="section-title">ABOUT</div>
+                        <p>
+                        Alamat : jalan pramuka, Remu Utara, Kec. Sorong, Kota Sorong, Papua Barat. 98412
+                        </p>
                         <p>Website ini diperuntukkan untuk para pencinta alam yang ingin mencari informasi mengenai objeck wisata yang berapada di kota sorong</p>
                         <div id="counter">
                             <div class="cell">
