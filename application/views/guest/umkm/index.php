@@ -25,10 +25,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Card -->
-                    <?php for ($i=0; $i < count($umkm) ; $i++):?>
+                    <?php for ($i = 0; $i < count($umkm); $i++): ?>
                     <div class="card">
                         <div class="card-image">
-                            <img class="img-fluid" src="<?=base_url('public/img/galeri/').$umkm[$i]['foto']?>"
+                            <img class="img-fluid" src="<?=base_url('public/img/galeri/') . $umkm[$i]['foto']?>"
                                 alt="alternative">
                         </div>
                         <div class="card-body">
@@ -47,7 +47,7 @@
                                 <p class="price">Starting at <span>$199</span></p> -->
                         </div>
                         <div class="button-container">
-                            <a class="btn-solid-reg page-scroll" href="#callMe">DETAILS</a>
+                            <a class="btn-solid-reg page-scroll" href="<?=base_url('umkm/detail/') . $umkm[$i]['id']?>">DETAILS</a>
                         </div>
                     </div>
                     <?php endfor;?>
