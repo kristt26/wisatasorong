@@ -1,8 +1,9 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Umkm extends CI_Controller {
+class Umkm extends CI_Controller
+{
 
     public function __construct()
     {
@@ -13,26 +14,25 @@ class Umkm extends CI_Controller {
 
     public function index()
     {
-        $data=[
-            'umkm'=> $this->lokasi->get('UMKM'),
+        $data = [
+            'umkm' => $this->lokasi->get('UMKM'),
             'galery' => $this->galery->getAll(),
-            'breadcrumbs' => 'UMKM'
+            'breadcrumbs' => 'UMKM',
         ];
-        $content['content'] = $this->load->view('guest/umkm/index', $data, TRUE);
-        
+        $content['content'] = $this->load->view('guest/umkm/index', $data, true);
+
         $this->load->view('guest/_shared/guest', $content);
     }
 
-    public function detail($id=null)
+    public function detail($id = null)
     {
-        $data=[
-            'wisata'=> $this->lokasi->getId($id),
+        $data = [
+            'wisata' => $this->lokasi->getId($id),
             'galery' => $this->galery->get($id),
-            'breadcrumbs' => '<a href="' . base_url('umkm') . '">UMKM</a><i class="fa fa-angle-double-right"></i><span>Detail UMKM</span>'
+            'breadcrumbs' => '<a href="' . base_url('umkm') . '">UMKM</a><i class="fa fa-angle-double-right"></i><span>Detail UMKM</span>',
         ];
-        $content['content'] = $this->load->view('guest/umkm/detail', $data, TRUE);
+        $content['content'] = $this->load->view('guest/umkm/detail', $data, true);
         $this->load->view('guest/_shared/guest', $content);
     }
 
 }
-

@@ -1,7 +1,7 @@
 <div class="row" ng-controller="homeController">
     <div class="col-md-7">
         <div class="row">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-6 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3><?=$Wisata?></h3>
@@ -15,7 +15,7 @@
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-6 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
                         <h3><?=$UMKM?></h3>
@@ -29,7 +29,7 @@
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-4 col-6">
+            <!-- <div class="col-lg-4 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3><?=$user?></h3>
@@ -42,11 +42,11 @@
                     <a href="<?=base_url('history')?>" class="small-box-footer">More info <i
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-md-5">
-        <h3 class="text-center">SISTEM INFORMASI GEOGRAFIS UNTUK PEMETAAN LOKASI WISATA BERBASIS WEB</h3>
+        <h3 class="text-center">SISTEM INFORMASI GEOGRAFIS UNTUK PEMETAAN LOKASI WISATA BERBASIS WEB <br> DI KOTA SORONG</h3>
         <p class="text-justify" style="margin-left:20px; margin-right:20px; font-size: 18px;">&emsp;&emsp;&emsp; Sebagai
             salah satu kota di Provinsi Papua Barat, Kota Sorong memiliki berbagai potensi di sektor pariwisata yakni
             Wisata Marina, Wisata Tirta, Wisata Sejarah, dan Wisata Suaka Alam yang perlu dibanggakan oleh Povinsi Papua
