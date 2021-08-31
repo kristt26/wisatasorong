@@ -60,7 +60,7 @@ if (!$this->session->userdata('is_login')) {
         <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Aria</a> -->
 
         <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html"><img src="<?=base_url('public/guest/images/logo.png')?>"
+        <a class="navbar-brand logo-image" href="<?=base_url('welcome')?>"><img src="<?=base_url('public/guest/images/logo.png')?>"
                 alt="alternative"></a>
 
         <!-- Mobile Menu Toggle Button -->

@@ -37,6 +37,8 @@
                                              class="fa fa-edit"></i></a>
                                      <a href="<?=base_url('admin/galery/index?id={{item.id}}')?>" class="btn btn-primary btn-sm ml-1" ng-click="edit(item, 'kecamatan')"><i
                                              class="fa fa-picture-o"></i></a>
+                                    <a href="<?=base_url('admin/umkm/delete/{{item.id}}')?>" class="btn btn-danger btn-sm ml-1"><i
+                                             class="fa fa-trash"></i></a>
                                  </td>
                              </tr>
                          </tbody>

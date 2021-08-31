@@ -152,6 +152,11 @@ class Lokasi_model extends CI_Model
             return false;
         }
     }
+
+    public function delete($id)
+    {
+        return $this->db->delete('lokasi', ['id'=>$id]);
+    }
 }
 
 /* End of file Wisata_model.php */

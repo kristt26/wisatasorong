@@ -51,7 +51,19 @@ class Umkm extends CI_Controller
 
     public function delete($id = null)
     {
-        # code...
+        $this->load->model('admin/Galery_model', 'galery');
+        $foto = $this->galery->getByLokasi($id);
+        foreach ($foto as $key => $value) {
+            $target_dir = 'public/img/galeri/'.$value['file'];
+            $result = $this->galery->delete($value['id']);
+            if($result){
+                unlink($target_dir);
+            }
+        }
+        $delete = $this->lokasi->delete($id);
+        if($delete){
+            redirect('admin/umkm');
+        }
     }
 
 }

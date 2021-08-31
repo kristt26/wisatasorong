@@ -11,6 +11,11 @@ class Galery_model extends CI_Model {
         ];
     }
 
+    public function getByLokasi($id)
+    {
+        return $this->db->get_where('foto', ['lokasiid'=>$id])->result_array();
+    }
+
     public function getAll()
     {
         return $this->db->query("SELECT
@@ -33,6 +38,11 @@ class Galery_model extends CI_Model {
         $data['id'] = $this->db->insert_id();
         $data['file'] = $item['file'];
         return $data;
+    }
+
+    public function delete($id)
+    {
+        return $this->db->delete('foto', ['id'=>$id]);
     }
 }
 
